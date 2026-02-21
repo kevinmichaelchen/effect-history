@@ -63,10 +63,17 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
 
       const wrappedTerms = new Set();
 
+      // Sort entries by term length descending so multi-word terms match before their sub-parts
+      const sortedGlossary = [...glossaryData].sort((a, b) => b.term.length - a.term.length);
+
       for (const textNode of textNodes) {
         const text = textNode.textContent ?? "";
-        for (const entry of glossaryData) {
-          const regex = new RegExp(`\\b(${entry.term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})\\b`, "i");
+        for (const entry of sortedGlossary) {
+          const escaped = entry.term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          // Use word boundaries for single words, lookahead/behind for multi-word terms
+          const regex = entry.term.includes(" ") || entry.term.includes("-")
+            ? new RegExp(`(?<![\\w-])(${escaped})(?![\\w-])`, "i")
+            : new RegExp(`\\b(${escaped})\\b`, "i");
           const match = text.match(regex);
           if (match && !wrappedTerms.has(entry.term.toLowerCase())) {
             const idx = match.index;
@@ -81,13 +88,9 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
             wrapper.className = "glossary-term";
             wrapper.setAttribute("tabindex", "0");
             wrapper.textContent = matched;
-
-            const tooltip = document.createElement("span");
-            tooltip.className = "glossary-tooltip";
-            tooltip.innerHTML = `<span class="tooltip-term">${entry.term}</span><span class="tooltip-sep"> — </span>${entry.definition}` +
-              (entry.link ? `<span class="tooltip-links"><a href="${entry.link}" target="_blank" rel="noreferrer">Learn more &nearr;</a></span>` : "");
-
-            wrapper.appendChild(tooltip);
+            wrapper.dataset.glossaryTerm = entry.term;
+            wrapper.dataset.glossaryDef = entry.definition;
+            wrapper.dataset.glossaryLink = entry.link || "";
 
             const parent = textNode.parentNode;
             if (parent) {
@@ -103,36 +106,6 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
         }
       }
     }
-
-    // ===== SMART TOOLTIP POSITIONING =====
-    // On hover/focus, check if tooltip would go off-screen and flip it below
-    document.querySelectorAll(".glossary-term").forEach((term) => {
-      const reposition = () => {
-        const tooltip = term.querySelector(".glossary-tooltip");
-        if (!tooltip) return;
-        const termRect = term.getBoundingClientRect();
-        // Remove below class to measure natural (above) position
-        tooltip.classList.remove("tooltip-below");
-        const tooltipRect = tooltip.getBoundingClientRect();
-        // If tooltip top goes above viewport (or within 8px), flip below
-        if (termRect.top - tooltipRect.height - 16 < 0) {
-          tooltip.classList.add("tooltip-below");
-        }
-        // Also check horizontal overflow and clamp
-        const ttRect = tooltip.getBoundingClientRect();
-        if (ttRect.left < 8) {
-          const shift = 8 - ttRect.left;
-          tooltip.style.left = `calc(50% + ${shift}px)`;
-        } else if (ttRect.right > window.innerWidth - 8) {
-          const shift = ttRect.right - window.innerWidth + 8;
-          tooltip.style.left = `calc(50% - ${shift}px)`;
-        } else {
-          tooltip.style.left = "";
-        }
-      };
-      term.addEventListener("mouseenter", reposition);
-      term.addEventListener("focus", reposition);
-    });
 
     // ===== REVEAL ANIMATION =====
     const revealTargets = article?.querySelectorAll("h2, h3, p, ul, ol, table, blockquote, pre, hr");
@@ -154,5 +127,34 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
     );
 
     revealTargets?.forEach((element) => revealObserver.observe(element));
+  </script>
+
+  <script>
+    import tippy from "tippy.js";
+    import "tippy.js/dist/tippy.css";
+
+    document.querySelectorAll(".glossary-term").forEach((el) => {
+      const term = el.getAttribute("data-glossary-term") ?? "";
+      const definition = el.getAttribute("data-glossary-def") ?? "";
+      const link = el.getAttribute("data-glossary-link");
+
+      const content =
+        `<span class="tooltip-term">${term}</span>` +
+        `<span class="tooltip-sep"> — </span>` +
+        definition +
+        (link ? `<div class="tooltip-links"><a href="${link}" target="_blank" rel="noreferrer">Learn more ↗</a></div>` : "");
+
+      tippy(el, {
+        content,
+        allowHTML: true,
+        theme: "glossary",
+        placement: "top",
+        interactive: true,
+        appendTo: document.body,
+        maxWidth: 340,
+        delay: [100, 0],
+        trigger: "mouseenter focus",
+      });
+    });
   </script>
 </BaseLayout>

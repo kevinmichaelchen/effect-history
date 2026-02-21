@@ -350,16 +350,19 @@
     border-radius: 0.8rem;
   }
 
-  .prose-lineage :where(th, td):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  .prose-lineage th,
+  .prose-lineage td {
     padding: 0.75rem 1rem;
   }
 
-  .prose-lineage :where(th):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  .prose-lineage th {
     background: var(--bg-table-header);
   }
 
   /* Give the first column some breathing room */
-  .prose-lineage :where(td:first-child, th:first-child):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  .prose-lineage td:first-child,
+  .prose-lineage th:first-child {
+    padding-left: 1.25rem;
     padding-right: 1.5rem;
   }
 
@@ -416,9 +419,8 @@
     transform: translateY(0);
   }
 
-  /* ===== GLOSSARY TOOLTIP ===== */
+  /* ===== GLOSSARY TERM (underline trigger for Tippy tooltip) ===== */
   .glossary-term {
-    position: relative;
     border-bottom: 1px dashed var(--text-link);
     cursor: help;
     color: inherit;
@@ -429,89 +431,57 @@
     color: var(--text-link);
   }
 
-  .glossary-tooltip {
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    min-width: 260px;
-    max-width: 340px;
-    padding: 0.75rem 1rem;
+  /* ===== TIPPY TOOLTIP THEME ===== */
+  .tippy-box[data-theme~="glossary"] {
     background: var(--bg-tooltip);
     color: var(--text-tooltip);
-    border-radius: 0.6rem;
     font-size: 0.85rem;
     line-height: 1.5;
+    border-radius: 0.6rem;
     box-shadow: 0 8px 24px rgb(0 0 0 / 18%);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 200ms ease, transform 200ms ease;
-    z-index: 30;
+    padding: 0.5rem 0.65rem;
     text-align: left;
+    max-width: 340px !important;
   }
 
-  /* Arrow pointing down (tooltip above term) */
-  .glossary-tooltip::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: var(--bg-tooltip);
+  .tippy-box[data-theme~="glossary"] .tippy-content {
+    padding: 0;
   }
 
-  /* Flipped: tooltip below the term */
-  .glossary-tooltip.tooltip-below {
-    bottom: auto;
-    top: calc(100% + 8px);
-    transform: translateX(-50%) translateY(-4px);
+  .tippy-box[data-theme~="glossary"] .tippy-arrow {
+    color: var(--bg-tooltip);
   }
 
-  .glossary-tooltip.tooltip-below::after {
-    top: auto;
-    bottom: 100%;
-    border-top-color: transparent;
-    border-bottom-color: var(--bg-tooltip);
-  }
-
-  .glossary-term:hover .glossary-tooltip,
-  .glossary-term:focus .glossary-tooltip {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(-50%) translateY(0);
-  }
-
-  .glossary-tooltip .tooltip-term {
+  .tippy-box[data-theme~="glossary"] .tooltip-term {
     font-weight: 600;
     font-size: 0.9rem;
     color: var(--text-link-hover);
   }
 
-  .glossary-tooltip .tooltip-sep {
+  .tippy-box[data-theme~="glossary"] .tooltip-sep {
     color: var(--text-link-hover);
     opacity: 0.5;
   }
 
-  [data-theme="dark"] .glossary-tooltip .tooltip-term {
+  [data-theme="dark"] .tippy-box[data-theme~="glossary"] .tooltip-term {
     color: var(--text-link);
   }
 
-  [data-theme="dark"] .glossary-tooltip .tooltip-sep {
+  [data-theme="dark"] .tippy-box[data-theme~="glossary"] .tooltip-sep {
     color: var(--text-link);
   }
 
-  .glossary-tooltip .tooltip-links {
+  .tippy-box[data-theme~="glossary"] .tooltip-links {
     margin-top: 0.4rem;
     font-size: 0.8rem;
     opacity: 0.8;
   }
 
-  .glossary-tooltip .tooltip-links a {
+  .tippy-box[data-theme~="glossary"] .tooltip-links a {
     color: var(--text-link-hover);
   }
 
-  [data-theme="dark"] .glossary-tooltip .tooltip-links a {
+  [data-theme="dark"] .tippy-box[data-theme~="glossary"] .tooltip-links a {
     color: var(--text-link);
   }
 

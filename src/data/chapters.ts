@@ -349,12 +349,64 @@ export const figureMeta: Record<string, FigureMeta> = {
 };
 
 export const plainLanguageGlossary = [
+  // ── Chapter 1: Lambda Calculus ──────────────────────────────────
+  {
+    term: "Lambda Calculus",
+    definition:
+      "A tiny formal system where everything is a function. It has only three things: variables, making functions, and calling functions — yet it can express any computation.",
+    link: "https://en.wikipedia.org/wiki/Lambda_calculus",
+    chapters: ["1", "2"],
+  },
   {
     term: "Function",
     definition:
       "A rule that takes an input and returns an output. In programming, functions are reusable chunks of logic.",
     link: "https://en.wikipedia.org/wiki/Function_(mathematics)",
     chapters: ["1", "4"],
+  },
+  {
+    term: "Abstraction",
+    definition:
+      "Creating a function by naming a parameter and writing a body. In lambda calculus, λx.x+1 abstracts over x.",
+    link: "https://en.wikipedia.org/wiki/Lambda_calculus#lambdaAbstraction",
+    chapters: ["1"],
+  },
+  {
+    term: "Application",
+    definition:
+      "Calling a function by giving it an argument. In lambda calculus, (λx.x+1) 5 applies the function to 5, yielding 6.",
+    link: "https://en.wikipedia.org/wiki/Lambda_calculus#Beta_reduction",
+    chapters: ["1"],
+  },
+  {
+    term: "Turing Complete",
+    definition:
+      "A system that can compute anything computable — given enough time and memory. If a language is Turing complete, there's no program it fundamentally can't express.",
+    link: "https://en.wikipedia.org/wiki/Turing_completeness",
+    chapters: ["1", "4", "10"],
+  },
+  {
+    term: "Church-Turing Thesis",
+    definition:
+      "The claim that lambda calculus and Turing machines compute exactly the same set of functions — meaning functional and imperative programming are equally powerful.",
+    link: "https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis",
+    chapters: ["1"],
+  },
+  {
+    term: "Mutable State",
+    definition:
+      "Data that can be changed in place after creation. Pure functional programming avoids this, preferring to create new values instead of modifying existing ones.",
+    link: "https://en.wikipedia.org/wiki/Mutable_object",
+    chapters: ["1", "4", "8"],
+  },
+
+  // ── Chapter 2: Curry-Howard ─────────────────────────────────────
+  {
+    term: "Curry-Howard Correspondence",
+    definition:
+      "The deep discovery that types in programming correspond to propositions in logic, and programs correspond to proofs. Writing a function with type A → B is proving that A implies B.",
+    link: "https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence",
+    chapters: ["2", "10"],
   },
   {
     term: "Type",
@@ -364,31 +416,441 @@ export const plainLanguageGlossary = [
     chapters: ["2", "7"],
   },
   {
-    term: "Monad",
+    term: "Proposition",
     definition:
-      "A way to chain computations while keeping context, like possible failure, async work, or logging.",
-    link: "https://en.wikipedia.org/wiki/Monad_(functional_programming)",
+      "A statement that is either true or false. In the Curry-Howard view, each type is a proposition and each program is a proof of that proposition.",
+    link: "https://en.wikipedia.org/wiki/Proposition",
+    chapters: ["2"],
+  },
+  {
+    term: "Combinator",
+    definition:
+      "A function that has no free variables — it only refers to its own parameters. K and S are fundamental combinators that can express any computation when combined.",
+    link: "https://en.wikipedia.org/wiki/Combinatory_logic",
+    chapters: ["1", "2"],
+  },
+  {
+    term: "Intuitionistic Logic",
+    definition:
+      "A flavor of logic where proving something means constructing it. You can't prove something exists by assuming it doesn't and finding a contradiction — you have to build it.",
+    link: "https://en.wikipedia.org/wiki/Intuitionistic_logic",
+    chapters: ["2"],
+  },
+  {
+    term: "Natural Deduction",
+    definition:
+      "A proof system that mirrors how humans actually reason: introduce assumptions, derive consequences, and discharge assumptions. It maps directly to how we write programs.",
+    link: "https://en.wikipedia.org/wiki/Natural_deduction",
+    chapters: ["2"],
+  },
+  {
+    term: "Beta-Reduction",
+    definition:
+      "The act of calling a function: substituting the argument for the parameter in the body. (λx.x+1) 5 beta-reduces to 5+1. This is both running a program and simplifying a proof.",
+    link: "https://en.wikipedia.org/wiki/Lambda_calculus#Beta_reduction",
+    chapters: ["1", "2"],
+  },
+  {
+    term: "Dependent Types",
+    definition:
+      "Types that can depend on values. For example, 'a list of exactly 5 integers' — the type itself encodes the length. This enables extremely precise compile-time checks.",
+    link: "https://en.wikipedia.org/wiki/Dependent_type",
+    chapters: ["2"],
+  },
+  {
+    term: "Product Type",
+    definition:
+      "A type that bundles values together — like a struct or tuple. A pair [string, number] is a product type. In logic, it corresponds to 'and' (conjunction).",
+    link: "https://en.wikipedia.org/wiki/Product_type",
+    chapters: ["2", "7"],
+  },
+  {
+    term: "Sum Type",
+    definition:
+      "A type that is one of several variants — like 'either a string or a number.' In TypeScript, A | B is a sum type. In logic, it corresponds to 'or' (disjunction).",
+    link: "https://en.wikipedia.org/wiki/Tagged_union",
+    chapters: ["2", "7"],
+  },
+
+  // ── Chapter 3: Category Theory ──────────────────────────────────
+  {
+    term: "Category Theory",
+    definition:
+      "A branch of math that studies structure and composition in the most abstract way. Objects, arrows between them, and rules for composing arrows — that's it.",
+    link: "https://en.wikipedia.org/wiki/Category_theory",
+    chapters: ["3"],
+  },
+  {
+    term: "Category",
+    definition:
+      "A collection of objects and arrows (morphisms) between them, with rules for composing arrows. Types and functions form a category; so do database tables and queries.",
+    link: "https://en.wikipedia.org/wiki/Category_(mathematics)",
+    chapters: ["3"],
+  },
+  {
+    term: "Morphism",
+    definition:
+      "An arrow between two objects in a category. In programming, a function from type A to type B is a morphism. The concept generalizes far beyond functions.",
+    link: "https://en.wikipedia.org/wiki/Morphism",
+    chapters: ["3"],
+  },
+  {
+    term: "Functor",
+    definition:
+      "A structure-preserving map between categories. In programming, anything with a .map() method — arrays, options, promises — is a functor.",
+    link: "https://en.wikipedia.org/wiki/Functor",
     chapters: ["3", "5"],
   },
   {
-    term: "Effect",
+    term: "Natural Transformation",
     definition:
-      "A computation that may need services, may fail, and may produce a value. Effect makes this explicit in types.",
-    link: "https://effect.website/docs/getting-started/the-effect-type/",
+      "A systematic way to convert between two functors while respecting their structure. Converting every Option<T> to an Array<T> in a consistent way is a natural transformation.",
+    link: "https://en.wikipedia.org/wiki/Natural_transformation",
+    chapters: ["3"],
+  },
+  {
+    term: "Monad",
+    definition:
+      "A design pattern for chaining computations that carry context — like possible failure, async work, or side effects. It has a way to wrap values and a way to chain operations.",
+    link: "https://en.wikipedia.org/wiki/Monad_(functional_programming)",
+    chapters: ["3", "5", "9"],
+  },
+  {
+    term: "Adjoint Functors",
+    definition:
+      "A pair of functors that are 'optimal inverses' of each other. Monads arise from composing adjoint functors — this is how abstract math connects to practical programming patterns.",
+    link: "https://en.wikipedia.org/wiki/Adjoint_functors",
+    chapters: ["3"],
+  },
+  {
+    term: "Endofunctor",
+    definition:
+      "A functor from a category to itself. When people say 'a monad is a monoid in the category of endofunctors,' they mean a monad maps a type system to itself with extra structure.",
+    link: "https://en.wikipedia.org/wiki/Functor#Endofunctors",
+    chapters: ["3"],
+  },
+  {
+    term: "Side Effects",
+    definition:
+      "Anything a function does besides returning a value — printing to the console, writing to a database, reading the clock, throwing an error. Pure functions have no side effects.",
+    link: "https://en.wikipedia.org/wiki/Side_effect_(computer_science)",
+    chapters: ["3", "4", "6"],
+  },
+
+  // ── Chapter 4: Lisp to ML ──────────────────────────────────────
+  {
+    term: "Higher-Order Functions",
+    definition:
+      "Functions that take other functions as arguments or return functions as results. Array.map() is a higher-order function — it takes a function and applies it to each element.",
+    link: "https://en.wikipedia.org/wiki/Higher-order_function",
+    chapters: ["1", "4"],
+  },
+  {
+    term: "Garbage Collection",
+    definition:
+      "Automatic memory management. The runtime detects objects that are no longer reachable and frees their memory, so programmers don't have to do it manually.",
+    link: "https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)",
+    chapters: ["4"],
+  },
+  {
+    term: "Type Inference",
+    definition:
+      "The compiler's ability to figure out types automatically without you writing them. When you write const x = 5, TypeScript infers x is a number.",
+    link: "https://en.wikipedia.org/wiki/Type_inference",
+    chapters: ["4", "9"],
+  },
+  {
+    term: "Polymorphism",
+    definition:
+      "Writing code that works with many types. A function sort<T>(list: T[]) is polymorphic — it works for arrays of any type, not just one specific type.",
+    link: "https://en.wikipedia.org/wiki/Polymorphism_(computer_science)",
+    chapters: ["4", "5", "6"],
+  },
+  {
+    term: "Algebraic Data Types",
+    definition:
+      "Types built from two operations: 'and' (product types — structs/tuples) and 'or' (sum types — tagged unions). They make it easy to model domain concepts precisely.",
+    link: "https://en.wikipedia.org/wiki/Algebraic_data_type",
+    chapters: ["4", "7"],
+  },
+  {
+    term: "Pattern Matching",
+    definition:
+      "A way to branch on the shape of data. Instead of if/else chains, you match against the structure of a value and destructure it in one step. The compiler ensures all cases are covered.",
+    link: "https://en.wikipedia.org/wiki/Pattern_matching",
+    chapters: ["4", "7"],
+  },
+  {
+    term: "Referential Transparency",
+    definition:
+      "An expression is referentially transparent if you can replace it with its value without changing the program's behavior. This makes code predictable and testable.",
+    link: "https://en.wikipedia.org/wiki/Referential_transparency",
+    chapters: ["4", "5"],
+  },
+  {
+    term: "Pure",
+    definition:
+      "A function is pure if it always returns the same output for the same input and causes no side effects. Pure functions are easier to test, cache, and run in parallel.",
+    link: "https://en.wikipedia.org/wiki/Pure_function",
+    chapters: ["4", "5"],
+  },
+
+  // ── Chapter 5: Haskell and Monads ───────────────────────────────
+  {
+    term: "Lazy Evaluation",
+    definition:
+      "A strategy where expressions aren't computed until their values are actually needed. This allows working with infinite data structures and avoids unnecessary computation.",
+    link: "https://en.wikipedia.org/wiki/Lazy_evaluation",
+    chapters: ["5"],
+  },
+  {
+    term: "Type Classes",
+    definition:
+      "A way to define shared behavior for different types — like an interface, but more powerful. Functor, Monad, and Eq are type classes. Types 'opt in' by providing implementations.",
+    link: "https://en.wikipedia.org/wiki/Type_class",
+    chapters: ["5"],
+  },
+  {
+    term: "Higher-Kinded Types",
+    definition:
+      "The ability to abstract over type constructors, not just types. Instead of just 'a list of numbers,' you can talk about 'any container of numbers' — Array, Option, Effect, etc.",
+    link: "https://en.wikipedia.org/wiki/Kind_(type_theory)",
+    chapters: ["5", "9"],
+  },
+  {
+    term: "Do Notation",
+    definition:
+      "Syntactic sugar that makes monadic code look like sequential imperative code. Haskell's 'do' block, Scala's 'for' comprehension, and Effect's 'Effect.gen' all serve this purpose.",
+    link: "https://en.wikipedia.org/wiki/Monad_(functional_programming)#do_notation",
+    chapters: ["5", "10"],
+  },
+  {
+    term: "Bind",
+    definition:
+      "The operation that chains monadic computations. It takes a monadic value and a function, unwraps the value, passes it to the function, and returns a new monadic value. Also called flatMap or >>=.",
+    link: "https://en.wikipedia.org/wiki/Monad_(functional_programming)#Overview",
+    chapters: ["5", "10"],
+  },
+  {
+    term: "Applicative",
+    definition:
+      "A pattern between Functor and Monad in power. It lets you apply a function inside a context to a value inside a context — useful when computations are independent of each other.",
+    link: "https://en.wikipedia.org/wiki/Applicative_functor",
+    chapters: ["5"],
+  },
+
+  // ── Chapter 6: Effect Systems and Algebraic Effects ─────────────
+  {
+    term: "Effect System",
+    definition:
+      "A type-level system that tracks not just what a function returns, but what side effects it might perform — like reading files, throwing errors, or accessing a database.",
+    link: "https://en.wikipedia.org/wiki/Effect_system",
     chapters: ["6", "10"],
   },
   {
+    term: "Algebraic Effects",
+    definition:
+      "A way to declare what operations a computation performs (the effects) separately from how those operations are handled (the handlers). More composable than monads.",
+    link: "https://en.wikipedia.org/wiki/Algebraic_effects",
+    chapters: ["6", "10"],
+  },
+  {
+    term: "Effect Handler",
+    definition:
+      "An interpreter for algebraic effects. It defines what actually happens when an effect operation is performed — like deciding whether 'log' prints to console or writes to a file.",
+    link: "https://en.wikipedia.org/wiki/Algebraic_effects#Handling",
+    chapters: ["6"],
+  },
+  {
+    term: "Monad Transformer",
+    definition:
+      "A way to combine monads by stacking them — like wrapping async inside error-handling inside state. Notoriously complex: N effects require N² boilerplate. Algebraic effects avoid this.",
+    link: "https://en.wikipedia.org/wiki/Monad_transformer",
+    chapters: ["6", "9"],
+  },
+  {
+    term: "Row Polymorphism",
+    definition:
+      "A type system feature that lets you say 'this computation uses these effects, plus possibly others.' It enables composing effects without specifying all of them upfront.",
+    link: "https://en.wikipedia.org/wiki/Row_polymorphism",
+    chapters: ["6"],
+  },
+
+  // ── Chapter 7: Making Illegal States Unrepresentable ────────────
+  {
+    term: "Null Reference",
+    definition:
+      "A special value meaning 'no value' that can masquerade as any type. Tony Hoare called it his 'billion-dollar mistake' because it causes crashes when code assumes a value exists.",
+    link: "https://en.wikipedia.org/wiki/Null_pointer",
+    chapters: ["7"],
+  },
+  {
+    term: "Option",
+    definition:
+      "A type that explicitly represents 'a value or nothing' — Some(value) or None. Unlike null, the type system forces you to handle the 'nothing' case. Also called Maybe in Haskell.",
+    link: "https://effect.website/docs/data-types/option/",
+    chapters: ["7", "10"],
+  },
+  {
+    term: "Either",
+    definition:
+      "A type that represents one of two possibilities — typically Right(success) or Left(error). It forces explicit error handling because the type system won't let you ignore the Left case.",
+    link: "https://effect.website/docs/data-types/either/",
+    chapters: ["7", "10"],
+  },
+  {
+    term: "Discriminated Union",
+    definition:
+      "A type where each variant has a tag field that identifies which variant it is. TypeScript's union types with a shared literal field (like 'type: \"success\"') are discriminated unions.",
+    link: "https://en.wikipedia.org/wiki/Tagged_union",
+    chapters: ["7", "10"],
+  },
+  {
+    term: "Exhaustive",
+    definition:
+      "Handling every possible case with no gaps. When the compiler checks that your switch/match covers all variants of a union type, that's exhaustiveness checking.",
+    link: "https://en.wikipedia.org/wiki/Exhaustive_testing",
+    chapters: ["7"],
+  },
+
+  // ── Chapter 8: Fibers and Structured Concurrency ────────────────
+  {
     term: "Fiber",
     definition:
-      "A lightweight unit of concurrent work that can be started, composed, interrupted, and observed safely.",
+      "A lightweight unit of concurrent work managed by the runtime, not the OS. Thousands can run concurrently with minimal memory overhead. Think of them as virtual threads.",
     link: "https://effect.website/docs/concurrency/fibers/",
-    chapters: ["8"],
+    chapters: ["8", "10"],
   },
   {
     term: "Structured Concurrency",
     definition:
-      "A model where child tasks belong to a parent scope, so cancellation and errors are managed predictably.",
+      "A model where child tasks belong to a parent scope, so cancellation and errors are managed predictably. When a parent scope ends, all its children are cleaned up.",
     link: "https://en.wikipedia.org/wiki/Structured_concurrency",
+    chapters: ["8", "10"],
+  },
+  {
+    term: "Green Threads",
+    definition:
+      "Lightweight threads managed by a runtime instead of the operating system. They use far less memory than OS threads and can number in the millions.",
+    link: "https://en.wikipedia.org/wiki/Green_thread",
     chapters: ["8"],
+  },
+  {
+    term: "Message Passing",
+    definition:
+      "A concurrency model where tasks communicate by sending messages to each other, rather than sharing memory. This avoids data races and makes concurrent code easier to reason about.",
+    link: "https://en.wikipedia.org/wiki/Message_passing",
+    chapters: ["8"],
+  },
+  {
+    term: "Cancellation",
+    definition:
+      "Stopping a running computation before it finishes. In Effect, cancellation is safe and deterministic — resources are always cleaned up and child fibers are interrupted.",
+    link: "https://effect.website/docs/concurrency/fibers/#interruption",
+    chapters: ["8", "10"],
+  },
+
+  // ── Chapter 9: Scala, ZIO ──────────────────────────────────────
+  {
+    term: "Contravariance",
+    definition:
+      "A type relationship where subtyping flows in the opposite direction. If Dog extends Animal, then Handler<Animal> can be used where Handler<Dog> is expected. In Effect, the R parameter is contravariant.",
+    link: "https://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)",
+    chapters: ["9", "10"],
+  },
+  {
+    term: "Covariance",
+    definition:
+      "A type relationship where subtyping flows in the same direction. If Dog extends Animal, then Array<Dog> can be used where Array<Animal> is expected. In Effect, A and E are covariant.",
+    link: "https://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)",
+    chapters: ["9", "10"],
+  },
+  {
+    term: "Effect",
+    definition:
+      "A computation that may need services, may fail, and may produce a value. Effect<A, E, R> makes all three explicit in the type, so the compiler can verify correctness.",
+    link: "https://effect.website/docs/getting-started/the-effect-type/",
+    chapters: ["6", "9", "10"],
+  },
+  {
+    term: "Intersection Type",
+    definition:
+      "A type that combines multiple types with '&'. A value of type A & B has all the properties of both A and B. Effect uses this to merge environmental requirements automatically.",
+    link: "https://www.typescriptlang.org/docs/handbook/2/objects.html#intersection-types",
+    chapters: ["9", "10"],
+  },
+
+  // ── Chapter 10: Effect Convergence ──────────────────────────────
+  {
+    term: "Layer",
+    definition:
+      "A recipe for building a service and its dependencies. Layers compose like puzzle pieces — Effect verifies at compile time that all required dependencies are provided.",
+    link: "https://effect.website/docs/requirements-management/layers/",
+    chapters: ["10"],
+  },
+  {
+    term: "Cause",
+    definition:
+      "A data type that captures every possible way a computation can fail — expected errors, unexpected defects, interruptions, and combinations of these. No failure information is ever lost.",
+    link: "https://effect.website/docs/error-management/cause/",
+    chapters: ["10"],
+  },
+  {
+    term: "Generics",
+    definition:
+      "Type parameters that let code work with many types. Effect<A, E, R> uses three generic parameters so one type can describe any combination of success, error, and requirements.",
+    link: "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+    chapters: ["10"],
+  },
+  {
+    term: "Conditional Types",
+    definition:
+      "TypeScript types that choose between outcomes based on a condition, like: T extends string ? 'yes' : 'no'. Effect uses these for type-level computation when composing effects.",
+    link: "https://www.typescriptlang.org/docs/handbook/2/conditional-types.html",
+    chapters: ["10"],
+  },
+  {
+    term: "Compile Time",
+    definition:
+      "When the TypeScript compiler checks your code, before it ever runs. Errors caught at compile time can't cause production crashes. Effect pushes as many checks as possible to compile time.",
+    link: "https://en.wikipedia.org/wiki/Compile_time",
+    chapters: ["2", "7", "10"],
+  },
+
+  // ── Cross-cutting terms ─────────────────────────────────────────
+  {
+    term: "Composition",
+    definition:
+      "Building complex things from simpler things. Composing two functions means piping the output of one into the input of another. Effect is designed so that everything composes.",
+    link: "https://en.wikipedia.org/wiki/Function_composition_(computer_science)",
+    chapters: ["1", "3", "10"],
+  },
+  {
+    term: "Imperative Programming",
+    definition:
+      "A style where you give step-by-step instructions that modify state. 'Set x to 5, then add 1 to x.' Contrasts with functional programming, where you describe relationships between values.",
+    link: "https://en.wikipedia.org/wiki/Imperative_programming",
+    chapters: ["1", "4"],
+  },
+  {
+    term: "Functional Programming",
+    definition:
+      "A style built on composing pure functions and avoiding mutable state. Programs describe what to compute, not how to mutate memory. Effect brings this approach to TypeScript.",
+    link: "https://en.wikipedia.org/wiki/Functional_programming",
+    chapters: ["4", "5", "9"],
+  },
+  {
+    term: "Proof Assistant",
+    definition:
+      "Software that helps write and verify mathematical proofs. Because of Curry-Howard, a verified proof is also a correct program. Coq, Agda, Lean, and Idris are proof assistants.",
+    link: "https://en.wikipedia.org/wiki/Proof_assistant",
+    chapters: ["2"],
+  },
+  {
+    term: "Desugar",
+    definition:
+      "To transform syntactic sugar (convenient shorthand) into its underlying form. 'do { x <- m; f x }' desugars to 'm >>= (\\x -> f x)'. The sugar is for humans; the core form is for the compiler.",
+    link: "https://en.wikipedia.org/wiki/Syntactic_sugar",
+    chapters: ["5", "10"],
   },
 ] as const;
