@@ -263,8 +263,8 @@
     font-size: clamp(1.45rem, 2.6vw, 2.1rem);
   }
 
-  /* Drop cap on first paragraph after h2 */
-  .prose-lineage :where(h2 + p)::first-letter {
+  /* Drop cap on first paragraph after h2 (disabled on single-line paragraphs via JS) */
+  .prose-lineage :where(h2 + p):not(.no-drop-cap)::first-letter {
     float: left;
     font-family: var(--font-display);
     font-size: 3.4em;

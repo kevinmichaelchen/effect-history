@@ -3,6 +3,7 @@ import BaseLayout from "./BaseLayout.astro";
 import ChapterNav from "../components/ChapterNav.astro";
 import PrevNextNav from "../components/PrevNextNav.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
+import DropCapGuard from "../components/DropCapGuard.astro";
 import { plainLanguageGlossary } from "../data/chapters";
 
 export interface ChapterItem {
@@ -45,6 +46,8 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
       </div>
     </section>
   </main>
+
+  <DropCapGuard />
 
   <script is:inline define:vars={{ glossaryData: plainLanguageGlossary.map(g => ({ term: g.term, definition: g.definition, link: g.link })) }}>
     // ===== GLOSSARY TOOLTIPS =====

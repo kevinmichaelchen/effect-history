@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
+import DropCapGuard from "../components/DropCapGuard.astro";
 
 export interface Heading {
   depth: number;
@@ -78,6 +79,8 @@ const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
       </div>
     </section>
   </main>
+
+  <DropCapGuard />
 
   <script>
     // Highlight active TOC link on scroll

@@ -1,0 +1,28 @@
+---
+/**
+ * Detects single-line paragraphs after h2 headings and disables their drop cap.
+ * The floated ::first-letter looks misaligned when the paragraph is only one line.
+ * Include this component in any layout that uses .prose-lineage.
+ */
+---
+
+<script>
+  function guardDropCaps() {
+    document.querySelectorAll(".prose-lineage h2").forEach((h2) => {
+      const p = h2.nextElementSibling;
+      if (!p || p.tagName !== "P") return;
+
+      const lineHeight = parseFloat(getComputedStyle(p).lineHeight);
+      // A single-line paragraph's clientHeight will be ≈ 1 × lineHeight.
+      // Use 1.4× as threshold so we catch one-liners but not two-liners.
+      if (p.clientHeight <= lineHeight * 1.4) {
+        p.classList.add("no-drop-cap");
+      } else {
+        p.classList.remove("no-drop-cap");
+      }
+    });
+  }
+
+  guardDropCaps();
+  window.addEventListener("resize", guardDropCaps);
+</script>
