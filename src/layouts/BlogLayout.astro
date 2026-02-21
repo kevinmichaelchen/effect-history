@@ -1,0 +1,115 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+
+export interface Heading {
+  depth: number;
+  text: string;
+  slug: string;
+}
+
+export interface Props {
+  title: string;
+  date: Date;
+  tags: string[];
+  headings: Heading[];
+}
+
+const { title, date, tags, headings } = Astro.props;
+const pageTitle = `${title} — Effect Lineage Blog`;
+const formattedDate = date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+<BaseLayout title={pageTitle} description={title}>
+  <main id="main-content" class="mx-auto max-w-6xl px-6 pb-16 pt-6 md:px-8">
+    <Breadcrumbs items={[
+      { label: "Home", href: "/" },
+      { label: "Blog", href: "/blog" },
+      { label: title },
+    ]} />
+
+    <section class="grid gap-8 lg:grid-cols-[260px_1fr]" aria-label="Blog post">
+      <!-- TOC sidebar -->
+      <nav class="blog-toc glass-card h-max rounded-2xl p-5 lg:sticky lg:top-16" aria-label="Table of contents">
+        <h2 class="text-theme-primary mb-3 font-display text-xl">Contents</h2>
+        <ul class="m-0 list-none space-y-1 p-0 text-sm">
+          {tocHeadings.map((heading) => (
+            <li>
+              <a
+                href={`#${heading.slug}`}
+                class:list={[
+                  "toc-link block border-l-2 py-1 no-underline transition-colors",
+                  heading.depth === 3 ? "pl-6" : "pl-3",
+                ]}
+                style="border-left-color: var(--border-medium); color: var(--text-secondary);"
+              >
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div>
+        <!-- Post header -->
+        <header class="mb-8">
+          <h1 class="text-theme-primary font-display text-3xl leading-tight md:text-4xl">{title}</h1>
+          <div class="text-theme-secondary mt-3 flex flex-wrap items-center gap-3 text-sm">
+            <time datetime={date.toISOString()}>{formattedDate}</time>
+            {tags.length > 0 && (
+              <div class="flex flex-wrap gap-1.5">
+                {tags.map((tag) => (
+                  <span class="blog-tag rounded-full px-2.5 py-0.5 text-xs font-medium">{tag}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        </header>
+
+        <article class="prose prose-lineage dark:prose-invert max-w-none">
+          <slot />
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Highlight active TOC link on scroll
+    const tocLinks = document.querySelectorAll<HTMLAnchorElement>(".toc-link");
+    const headingEls = Array.from(tocLinks).map((link) => {
+      const id = link.getAttribute("href")?.slice(1);
+      return id ? document.getElementById(id) : null;
+    }).filter(Boolean) as HTMLElement[];
+
+    function updateActiveToc() {
+      let activeIndex = 0;
+      const scrollY = window.scrollY + 120;
+
+      for (let i = headingEls.length - 1; i >= 0; i--) {
+        if (headingEls[i].offsetTop <= scrollY) {
+          activeIndex = i;
+          break;
+        }
+      }
+
+      tocLinks.forEach((link, i) => {
+        if (i === activeIndex) {
+          link.style.borderLeftColor = "var(--text-link)";
+          link.style.color = "var(--text-primary)";
+        } else {
+          link.style.borderLeftColor = "var(--border-medium)";
+          link.style.color = "var(--text-secondary)";
+        }
+      });
+    }
+
+    window.addEventListener("scroll", updateActiveToc, { passive: true });
+    updateActiveToc();
+  </script>
+</BaseLayout>
