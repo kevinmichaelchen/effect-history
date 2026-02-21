@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
+import remarkBaseLinks from "./src/lib/remark-base-links.mjs";
 
 export default defineConfig({
   site: "https://kevinmichaelchen.github.io",
@@ -8,6 +9,7 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   markdown: {
+    remarkPlugins: [remarkBaseLinks],
     shikiConfig: {
       themes: {
         light: "github-light",

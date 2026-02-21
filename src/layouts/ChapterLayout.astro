@@ -5,6 +5,7 @@ import PrevNextNav from "../components/PrevNextNav.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import DropCapGuard from "../components/DropCapGuard.astro";
 import { plainLanguageGlossary } from "../data/chapters";
+import { papers } from "../data/papers";
 import { base } from "../lib/base";
 
 export interface ChapterItem {
@@ -50,7 +51,10 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
 
   <DropCapGuard />
 
-  <script is:inline define:vars={{ glossaryData: plainLanguageGlossary.map(g => ({ term: g.term, definition: g.definition, link: g.link })) }}>
+  <script is:inline define:vars={{
+    glossaryData: plainLanguageGlossary.map(g => ({ term: g.term, definition: g.definition, link: g.link })),
+    paperData: papers.map(p => ({ title: p.title, authors: p.authors.join(", "), year: p.year, summary: p.summary, localPdf: p.localPdf ? base(p.localPdf) : "", url: p.url || "" })),
+  }}>
     // ===== GLOSSARY TOOLTIPS =====
     const article = document.getElementById("chapter-content");
     if (article) {
@@ -111,6 +115,63 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
       }
     }
 
+    // ===== PAPER TOOLTIPS =====
+    if (article) {
+      const paperWalker = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, null);
+      const paperTextNodes = [];
+      let pNode;
+      while ((pNode = paperWalker.nextNode())) {
+        const parent = pNode.parentElement;
+        if (parent && (parent.closest("code") || parent.closest("pre") || parent.closest("a") || parent.closest(".glossary-term") || parent.closest(".paper-term") || parent.closest("h2") || parent.closest("h3"))) {
+          continue;
+        }
+        paperTextNodes.push(pNode);
+      }
+
+      const wrappedPapers = new Set();
+      const sortedPapers = [...paperData].sort((a, b) => b.title.length - a.title.length);
+
+      for (const textNode of paperTextNodes) {
+        const text = textNode.textContent ?? "";
+        for (const entry of sortedPapers) {
+          const escaped = entry.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          const regex = new RegExp(`(?<![\\w-])(${escaped})(?![\\w-])`, "i");
+          const match = text.match(regex);
+          if (match && !wrappedPapers.has(entry.title.toLowerCase())) {
+            const idx = match.index;
+            const before = text.slice(0, idx);
+            const matched = match[0];
+            const after = text.slice(idx + matched.length);
+
+            const beforeNode = document.createTextNode(before);
+            const afterNode = document.createTextNode(after);
+
+            const wrapper = document.createElement("span");
+            wrapper.className = "paper-term";
+            wrapper.setAttribute("tabindex", "0");
+            wrapper.textContent = matched;
+            wrapper.dataset.paperTitle = entry.title;
+            wrapper.dataset.paperAuthors = entry.authors;
+            wrapper.dataset.paperYear = String(entry.year);
+            wrapper.dataset.paperSummary = entry.summary;
+            wrapper.dataset.paperPdf = entry.localPdf;
+            wrapper.dataset.paperUrl = entry.url;
+
+            const parent = textNode.parentNode;
+            if (parent) {
+              parent.insertBefore(beforeNode, textNode);
+              parent.insertBefore(wrapper, textNode);
+              parent.insertBefore(afterNode, textNode);
+              parent.removeChild(textNode);
+            }
+
+            wrappedPapers.add(entry.title.toLowerCase());
+            break;
+          }
+        }
+      }
+    }
+
     // ===== REVEAL ANIMATION =====
     const revealTargets = article?.querySelectorAll("h2, h3, p, ul, ol, table, blockquote, pre, hr");
     revealTargets?.forEach((element, index) => {
@@ -137,6 +198,7 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
     import tippy from "tippy.js";
     import "tippy.js/dist/tippy.css";
 
+    // Glossary tooltips
     document.querySelectorAll(".glossary-term").forEach((el) => {
       const term = el.getAttribute("data-glossary-term") ?? "";
       const definition = el.getAttribute("data-glossary-def") ?? "";
@@ -156,6 +218,38 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
         interactive: true,
         appendTo: document.body,
         maxWidth: 340,
+        delay: [100, 0],
+        trigger: "mouseenter focus",
+      });
+    });
+
+    // Paper tooltips
+    document.querySelectorAll(".paper-term").forEach((el) => {
+      const title = el.getAttribute("data-paper-title") ?? "";
+      const authors = el.getAttribute("data-paper-authors") ?? "";
+      const year = el.getAttribute("data-paper-year") ?? "";
+      const summary = el.getAttribute("data-paper-summary") ?? "";
+      const pdf = el.getAttribute("data-paper-pdf");
+      const url = el.getAttribute("data-paper-url");
+
+      const pdfLink = pdf
+        ? `<a href="${pdf}" target="_blank" rel="noreferrer">Read PDF ↗</a>`
+        : (url ? `<a href="${url}" target="_blank" rel="noreferrer">View source ↗</a>` : "");
+
+      const content =
+        `<span class="tooltip-term">${title}</span>` +
+        `<div class="tooltip-paper-meta">${authors} (${year})</div>` +
+        `<div class="tooltip-paper-summary">${summary}</div>` +
+        (pdfLink ? `<div class="tooltip-links">${pdfLink}</div>` : "");
+
+      tippy(el, {
+        content,
+        allowHTML: true,
+        theme: "glossary",
+        placement: "top",
+        interactive: true,
+        appendTo: document.body,
+        maxWidth: 380,
         delay: [100, 0],
         trigger: "mouseenter focus",
       });
@@ -184,6 +278,18 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
     }
 
     :global(.glossary-term:hover) {
+      color: var(--text-link);
+    }
+
+    /* Paper term underline — spans injected by inline JS */
+    :global(.paper-term) {
+      border-bottom: 1px dotted var(--color-amber-400);
+      cursor: help;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    :global(.paper-term:hover) {
       color: var(--text-link);
     }
 
@@ -239,6 +345,18 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
 
     :global([data-theme="dark"] .tippy-box[data-theme~="glossary"] .tooltip-links a) {
       color: var(--text-link);
+    }
+
+    :global(.tippy-box[data-theme~="glossary"] .tooltip-paper-meta) {
+      font-size: 0.78rem;
+      opacity: 0.7;
+      margin-top: 0.15rem;
+    }
+
+    :global(.tippy-box[data-theme~="glossary"] .tooltip-paper-summary) {
+      margin-top: 0.35rem;
+      font-size: 0.82rem;
+      line-height: 1.45;
     }
 
     :global(.tippy-box[data-theme~="glossary"] code) {
