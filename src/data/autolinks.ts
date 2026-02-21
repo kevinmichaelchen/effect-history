@@ -1,0 +1,63 @@
+/**
+ * Known names, libraries, and frameworks that should be auto-linked in the prose.
+ * Maps display text (as it appears in <strong> tags) to a URL.
+ */
+export const autolinks: Record<string, string> = {
+  // People
+  "Alonzo Church": "https://en.wikipedia.org/wiki/Alonzo_Church",
+  "Alan Turing": "https://en.wikipedia.org/wiki/Alan_Turing",
+  "Haskell Brooks Curry": "https://en.wikipedia.org/wiki/Haskell_Curry",
+  "William Alvin Howard": "https://en.wikipedia.org/wiki/William_Alvin_Howard",
+  "Per Martin-Löf": "https://en.wikipedia.org/wiki/Per_Martin-L%C3%B6f",
+  "Saunders Mac Lane": "https://en.wikipedia.org/wiki/Saunders_Mac_Lane",
+  "Samuel Eilenberg": "https://en.wikipedia.org/wiki/Samuel_Eilenberg",
+  "Eugenio Moggi": "https://en.wikipedia.org/wiki/Eugenio_Moggi",
+  "John McCarthy": "https://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)",
+  "Robin Milner": "https://en.wikipedia.org/wiki/Robin_Milner",
+  "Philip Wadler": "https://en.wikipedia.org/wiki/Philip_Wadler",
+  "Christopher Strachey": "https://en.wikipedia.org/wiki/Christopher_Strachey",
+  "Tony Hoare": "https://en.wikipedia.org/wiki/Tony_Hoare",
+  "Joe Armstrong": "https://en.wikipedia.org/wiki/Joe_Armstrong_(programmer)",
+  "Martin Sústrik": "https://en.wikipedia.org/wiki/Martin_S%C3%BAstrik",
+  "Nathaniel J. Smith": "https://en.wikipedia.org/wiki/Nathaniel_J._Smith",
+  "Roman Elizarov": "https://en.wikipedia.org/wiki/Roman_Elizarov",
+  "Martin Odersky": "https://en.wikipedia.org/wiki/Martin_Odersky",
+  "John De Goes": "https://en.wikipedia.org/wiki/John_A._De_Goes",
+  "Michael Arnaldi": "https://github.com/mikearnaldi",
+  "Niklaus Wirth": "https://en.wikipedia.org/wiki/Niklaus_Wirth",
+  "Roger Godement": "https://en.wikipedia.org/wiki/Roger_Godement",
+  "Heinrich Kleisli": "https://en.wikipedia.org/wiki/Heinrich_Kleisli",
+  "Nicolaas de Bruijn": "https://en.wikipedia.org/wiki/Nicolaas_Govert_de_Bruijn",
+  "Simon Peyton Jones": "https://en.wikipedia.org/wiki/Simon_Peyton_Jones",
+  "Luis Damas": "https://en.wikipedia.org/wiki/Luis_Damas",
+  "J. Roger Hindley": "https://en.wikipedia.org/wiki/J._Roger_Hindley",
+  "Gordon Plotkin": "https://en.wikipedia.org/wiki/Gordon_Plotkin",
+  "Matija Pretnar": "https://en.wikipedia.org/wiki/Matija_Pretnar",
+
+  // Languages & Frameworks
+  "Lisp": "https://en.wikipedia.org/wiki/Lisp_(programming_language)",
+  "ML": "https://en.wikipedia.org/wiki/ML_(programming_language)",
+  "Haskell": "https://en.wikipedia.org/wiki/Haskell_(programming_language)",
+  "Scala": "https://en.wikipedia.org/wiki/Scala_(programming_language)",
+  "Erlang": "https://en.wikipedia.org/wiki/Erlang_(programming_language)",
+  "OCaml": "https://en.wikipedia.org/wiki/OCaml",
+  "TypeScript": "https://en.wikipedia.org/wiki/TypeScript",
+  "Koka": "https://en.wikipedia.org/wiki/Koka_(programming_language)",
+  "Miranda": "https://en.wikipedia.org/wiki/Miranda_(programming_language)",
+  "Coq": "https://en.wikipedia.org/wiki/Coq_(software)",
+  "Agda": "https://en.wikipedia.org/wiki/Agda_(programming_language)",
+  "Idris": "https://en.wikipedia.org/wiki/Idris_(programming_language)",
+  "Lean": "https://en.wikipedia.org/wiki/Lean_(proof_assistant)",
+  "ZIO": "https://zio.dev/",
+  "Cats Effect": "https://typelevel.org/cats-effect/",
+  "Effect": "https://effect.website",
+
+  // Concepts that appear as bold terms
+  "lambda calculus": "https://en.wikipedia.org/wiki/Lambda_calculus",
+  "category theory": "https://en.wikipedia.org/wiki/Category_theory",
+  "Curry-Howard correspondence": "https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence",
+  "Church-Turing thesis": "https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis",
+  "Hindley-Milner": "https://en.wikipedia.org/wiki/Hindley%E2%80%93Milner_type_system",
+  "algebraic data types": "https://en.wikipedia.org/wiki/Algebraic_data_type",
+  "Automath": "https://en.wikipedia.org/wiki/Automath",
+};

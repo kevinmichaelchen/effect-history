@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import GlossaryCard from "../components/GlossaryCard.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { plainLanguageGlossary } from "../data/chapters";
+import { splitMarkdownByChapter } from "../lib/chapters";
+
+const allChapters = await splitMarkdownByChapter();
+const chapterSlugs: Record<string, string> = {};
+for (const ch of allChapters) {
+  chapterSlugs[ch.chapterNumber] = ch.slug;
+}
+---
+
+<BaseLayout title="Glossary — Effect Lineage">
+  <main id="main-content" class="mx-auto max-w-6xl px-6 pb-16 pt-6 md:px-8">
+    <Breadcrumbs items={[
+      { label: "Home", href: "/" },
+      { label: "Glossary" },
+    ]} />
+
+    <h1 class="text-theme-primary font-display text-4xl">Glossary</h1>
+    <p class="text-theme-secondary mt-3 max-w-3xl text-lg">
+      Key terms explained in plain language. No <abbr title="Computer Science">CS</abbr> degree required.
+      Each term links to the chapters where it appears.
+    </p>
+
+    <dl class="mt-6 grid gap-3 md:grid-cols-2">
+      {plainLanguageGlossary.map((entry) => (
+        <GlossaryCard
+          term={entry.term}
+          definition={entry.definition}
+          link={entry.link}
+          chapters={entry.chapters}
+          chapterSlugs={chapterSlugs}
+          linkToChapterPages
+        />
+      ))}
+    </dl>
+  </main>
+</BaseLayout>

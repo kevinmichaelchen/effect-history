@@ -1,0 +1,32 @@
+{
+  "name": "effect-history-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "fetch-images": "node scripts/fetch-figure-images.mjs"
+  },
+  "dependencies": {
+    "@shikijs/markdown-it": "^3.22.0",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.1.11",
+    "@traptitech/markdown-it-katex": "^3.6.0",
+    "astro": "^5.2.0",
+    "dotenv": "^16.4.7",
+    "geist": "^1.7.0",
+    "katex": "^0.16.28",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "markdown-it-footnote": "^4.0.0",
+    "shiki": "^3.22.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@types/node": "^25.3.0",
+    "typescript": "^5.9.3"
+  }
+}

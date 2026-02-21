@@ -1,0 +1,49 @@
+---
+export interface ChapterItem {
+  chapterNumber: string;
+  title: string;
+  slug: string;
+  readingTime?: number;
+}
+
+export interface Props {
+  chapters: ChapterItem[];
+  activeSlug?: string;
+}
+
+const { chapters, activeSlug } = Astro.props;
+---
+
+<nav class="glass-card h-max rounded-2xl p-5 lg:sticky lg:top-4" aria-label="Chapter navigation">
+  <h2 class="text-theme-primary mb-3 font-display text-xl">Chapters</h2>
+  <ul class="m-0 list-none space-y-1 p-0 text-sm">
+    {chapters.map((chapter) => {
+      const isActive = chapter.slug === activeSlug;
+      return (
+        <li>
+          <a
+            href={`/chapters/${chapter.slug}`}
+            class:list={["chapter-link", { "font-semibold": isActive }]}
+            style={isActive ? "color: var(--text-primary); border-left-color: var(--text-link);" : ""}
+            aria-current={isActive ? "page" : undefined}
+          >
+            <span class="flex items-center justify-between gap-2">
+              <span>{chapter.title.replace(/^\d+\.\s*/, "")}</span>
+              {chapter.readingTime && <span class="shrink-0 text-xs opacity-50">{chapter.readingTime}m</span>}
+            </span>
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+  <div class="border-theme-subtle mt-4 border-t pt-3">
+    <p class="text-theme-secondary text-xs font-semibold">Resources</p>
+    <ul class="mt-1 list-none space-y-1 p-0 text-xs">
+      <li><a href="https://effect.website" target="_blank" rel="noreferrer">Effect website</a></li>
+      <li><a href="https://effect.website/docs" target="_blank" rel="noreferrer">Effect docs</a></li>
+      <li><a href="https://github.com/Effect-TS/effect" target="_blank" rel="noreferrer">Effect GitHub</a></li>
+      <li><a href="https://discord.gg/effect-ts" target="_blank" rel="noreferrer">Effect Discord</a></li>
+      <li><a href="/effect-intellectual-lineage.md">Raw markdown</a></li>
+    </ul>
+  </div>
+</nav>

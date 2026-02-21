@@ -1,0 +1,62 @@
+---
+import { eras, type FigureMeta, type Era } from "../data/chapters";
+
+export interface Props {
+  name: string;
+  image: string;
+  sourcePage?: string;
+  meta?: FigureMeta;
+  era?: Era;
+  chapterSlugs?: Record<string, string>;
+  linkToChapterPages?: boolean;
+}
+
+const { name, image, sourcePage, meta, era, chapterSlugs = {}, linkToChapterPages = false } = Astro.props;
+---
+
+<li class="glass-card figure-card rounded-2xl overflow-hidden">
+  <div class="relative">
+    <img
+      src={image}
+      alt={`Portrait of ${name}`}
+      loading="lazy"
+      decoding="async"
+      class="aspect-[4/3] w-full object-cover"
+    />
+    {era && (
+      <span class="figure-era-badge" style={`border: 1px solid ${era.color};`}>
+        {era.label}
+      </span>
+    )}
+    <div class="figure-overlay">
+      <p class="font-display text-lg font-semibold">{name}</p>
+      {meta?.years && <p class="text-xs opacity-70">{meta.years}</p>}
+      {meta?.contribution && <p class="figure-contribution">{meta.contribution}</p>}
+      <div class="figure-links">
+        {meta?.wikipedia && (
+          <a href={meta.wikipedia} target="_blank" rel="noreferrer">Wikipedia</a>
+        )}
+        {sourcePage && (
+          <a href={sourcePage} target="_blank" rel="noreferrer">Image source</a>
+        )}
+        {meta?.chapters.map((ch) => {
+          const slug = chapterSlugs[ch];
+          const href = linkToChapterPages && slug ? `/chapters/${slug}` : `#ch-${ch}`;
+          return <a href={href}>Ch. {ch}</a>;
+        })}
+      </div>
+    </div>
+  </div>
+  <div class="p-4">
+    <p class="font-semibold" style="color: var(--text-primary);">
+      {meta?.wikipedia ? (
+        <a href={meta.wikipedia} target="_blank" rel="noreferrer" class="no-underline" style="color: var(--text-primary);">
+          {name} <span class="text-xs" style="color: var(--text-link);">&nearr;</span>
+        </a>
+      ) : name}
+    </p>
+    {meta?.contribution && (
+      <p class="mt-0.5 text-xs" style="color: var(--text-secondary);">{meta.contribution}</p>
+    )}
+  </div>
+</li>

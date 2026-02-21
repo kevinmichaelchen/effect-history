@@ -1,0 +1,39 @@
+---
+export interface Props {
+  term: string;
+  definition: string;
+  link?: string;
+  chapters: readonly string[];
+  chapterSlugs?: Record<string, string>;
+  linkToChapterPages?: boolean;
+}
+
+const { term, definition, link, chapters, chapterSlugs = {}, linkToChapterPages = false } = Astro.props;
+---
+
+<div class="border-theme-subtle bg-theme-card rounded-xl border p-4">
+  <dt class="text-theme-primary font-semibold">
+    {link ? (
+      <a href={link} target="_blank" rel="noreferrer" class="text-theme-primary no-underline">
+        {term} <span class="text-theme-link text-xs">&nearr;</span>
+      </a>
+    ) : term}
+  </dt>
+  <dd class="text-theme-secondary mt-1 text-sm">
+    {definition}
+  </dd>
+  <dd class="mt-1.5 flex flex-wrap gap-1">
+    {chapters.map((ch) => {
+      const slug = chapterSlugs[ch];
+      const href = linkToChapterPages && slug ? `/chapters/${slug}` : `#ch-${ch}`;
+      return (
+        <a
+          href={href}
+          class="border-theme-subtle text-theme-link rounded-full border px-2 py-0.5 text-xs no-underline"
+        >
+          Ch. {ch}
+        </a>
+      );
+    })}
+  </dd>
+</div>

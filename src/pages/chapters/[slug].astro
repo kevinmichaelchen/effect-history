@@ -1,0 +1,58 @@
+---
+import ChapterLayout from "../../layouts/ChapterLayout.astro";
+import { splitMarkdownByChapter } from "../../lib/chapters";
+import { renderMarkdown } from "../../lib/markdown";
+import { chapterMeta } from "../../data/chapters";
+
+const readingTimes: Record<string, number> = {
+  "1": 3, "2": 5, "3": 6, "4": 4, "5": 4, "6": 5,
+  "7": 4, "8": 3, "9": 4, "10": 5, "11": 2, "12": 2,
+};
+
+export async function getStaticPaths() {
+  const chapters = await splitMarkdownByChapter();
+
+  return chapters.map((chapter, index) => ({
+    params: { slug: chapter.slug },
+    props: {
+      chapter,
+      index,
+      allChapters: chapters,
+    },
+  }));
+}
+
+const { chapter, index, allChapters } = Astro.props;
+
+const { html } = await renderMarkdown(chapter.markdownBody);
+
+const chapterItems = allChapters.map((ch: any) => ({
+  chapterNumber: ch.chapterNumber,
+  title: `${ch.chapterNumber}. ${ch.title}`,
+  slug: ch.slug,
+  readingTime: readingTimes[ch.chapterNumber],
+}));
+
+const prev = index > 0 ? {
+  slug: allChapters[index - 1].slug,
+  title: allChapters[index - 1].title,
+  chapterNumber: allChapters[index - 1].chapterNumber,
+} : undefined;
+
+const next = index < allChapters.length - 1 ? {
+  slug: allChapters[index + 1].slug,
+  title: allChapters[index + 1].title,
+  chapterNumber: allChapters[index + 1].chapterNumber,
+} : undefined;
+---
+
+<ChapterLayout
+  title={chapter.title}
+  chapterNumber={chapter.chapterNumber}
+  chapters={chapterItems}
+  activeSlug={chapter.slug}
+  prev={prev}
+  next={next}
+>
+  <Fragment set:html={html} />
+</ChapterLayout>

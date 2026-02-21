@@ -1,0 +1,20 @@
+---
+import { eras } from "../data/chapters";
+
+export interface Props {
+  /** Show compact version (no year ranges) */
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<div class={`flex ${compact ? "gap-2 text-xs" : "flex-wrap gap-2 text-xs"}`} style="color: var(--text-secondary);">
+  {eras.map((era) => (
+    <span class="flex items-center gap-1">
+      <span class="inline-block h-2 w-2 rounded-full" style={`background: ${era.color};`} data-era-dot data-light-color={era.color} data-dark-color={era.darkColor}></span>
+      <span class={compact ? "hidden sm:inline" : ""}>{era.label}</span>
+      {!compact && <span class="opacity-60">({era.years})</span>}
+    </span>
+  ))}
+</div>

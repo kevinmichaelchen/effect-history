@@ -1,0 +1,182 @@
+[
+  {
+    "name": "Alan Turing",
+    "image": "/images/figures/alan-turing.webp",
+    "query": "Alan Turing portrait",
+    "sourcePage": "https://en.wikipedia.org/wiki/Alan_Turing",
+    "sourceDomain": "Wikipedia",
+    "sourceTitle": "Alan Turing - Wikipedia",
+    "width": 752,
+    "height": 1002
+  },
+  {
+    "name": "William Alvin Howard",
+    "image": "/images/figures/william-alvin-howard.webp",
+    "query": "William Alvin Howard portrait",
+    "sourcePage": "https://fr.wikipedia.org/wiki/Fichier:William_Alvin_Howard_May_2004.jpg",
+    "sourceDomain": "Wikipédia",
+    "sourceTitle": "Fichier:William Alvin Howard May 2004.jpg — Wikipédia",
+    "width": 1200,
+    "height": 1600
+  },
+  {
+    "name": "Saunders Mac Lane",
+    "image": "/images/figures/saunders-mac-lane.webp",
+    "query": "Saunders Mac Lane portrait",
+    "sourcePage": "https://en.wikipedia.org/wiki/Saunders_Mac_Lane",
+    "sourceDomain": "Wikipedia",
+    "sourceTitle": "Saunders Mac Lane - Wikipedia",
+    "width": 283,
+    "height": 400
+  },
+  {
+    "name": "Samuel Eilenberg",
+    "image": "/images/figures/samuel-eilenberg.webp",
+    "query": "Samuel Eilenberg portrait",
+    "sourcePage": "https://en.wikipedia.org/wiki/Samuel_Eilenberg",
+    "sourceDomain": "Wikipedia",
+    "sourceTitle": "Samuel Eilenberg - Wikipedia",
+    "width": 273,
+    "height": 400
+  },
+  {
+    "name": "Eugenio Moggi",
+    "image": "/images/figures/eugenio-moggi.webp",
+    "query": "Eugenio Moggi portrait",
+    "sourcePage": "https://www.awesomebooks.com/book/9783540634553/category-theory-and-computer-science",
+    "sourceDomain": "Awesome Books",
+    "sourceTitle": "Category Theory and Computer Science (New) | Eugenio Moggi | 9783540634553  | Awesome Books",
+    "width": 266,
+    "height": 400
+  },
+  {
+    "name": "Philip Wadler",
+    "image": "/images/figures/philip-wadler.webp",
+    "query": "Philip Wadler portrait",
+    "sourcePage": "https://en.wikipedia.org/wiki/Philip_Wadler",
+    "sourceDomain": "Wikipedia",
+    "sourceTitle": "Philip Wadler - Wikipedia",
+    "width": 2304,
+    "height": 3072
+  },
+  {
+    "name": "Tony Hoare",
+    "image": "/images/figures/tony-hoare.webp",
+    "query": "Tony Hoare portrait",
+    "sourcePage": "https://en.wikipedia.org/wiki/Tony_Hoare",
+    "sourceDomain": "Wikipedia",
+    "sourceTitle": "Tony Hoare - Wikipedia",
+    "width": 3744,
+    "height": 3744
+  },
+  {
+    "name": "Michael Arnaldi",
+    "image": "/images/figures/michael-arnaldi.webp",
+    "query": "Michael Arnaldi portrait",
+    "sourcePage": "https://www.linkedin.com/posts/effectfultech_michael-arnaldi-creator-of-effect-and-founder-activity-7303435206693113856-XTe0",
+    "sourceDomain": "LinkedIn",
+    "sourceTitle": "Michael Arnaldi, creator of Effect and founder of Effectful Technologies,  will close the conference with insights on the current state of Effect and  what's next for the ecosystem. 🎟️ Join Effect… |",
+    "width": 800,
+    "height": 424
+  },
+  {
+    "name": "Alonzo Church",
+    "image": "/images/figures/alonzo-church.webp",
+    "query": "Alonzo Church portrait",
+    "sourcePage": "https://en.wikipedia.org/wiki/Alonzo_Church",
+    "sourceDomain": "Wikipedia",
+    "sourceTitle": "Alonzo Church - Wikipedia",
+    "width": 235,
+    "height": 314
+  },
+  {
+    "name": "Haskell Brooks Curry",
+    "image": "/images/figures/haskell-brooks-curry.webp",
+    "query": "Haskell Brooks Curry portrait",
+    "sourcePage": "https://www.facebook.com/VmcLearning/posts/vmc-tribute-to-haskell-brooks-curry-american-mathematician-who-was-a-pioneer-of-/6097548783608169/",
+    "sourceDomain": "Facebook",
+    "sourceTitle": "VMC Tribute to Haskell Brooks Curry American mathematician who was a  pioneer of modern mathematical logic. His research in the foundations of  mathematics led him to the development of combinatory logic. #VMC #",
+    "width": 1080,
+    "height": 1080
+  },
+  {
+    "name": "Per Martin-Löf",
+    "image": "/images/figures/per-martin-lof.webp",
+    "query": "Per Martin-Löf portrait",
+    "sourcePage": "https://en.wikipedia.org/wiki/Per_Martin-L%C3%B6f",
+    "sourceDomain": "Wikipedia",
+    "sourceTitle": "Per Martin-Löf - Wikipedia",
+    "width": 250,
+    "height": 321
+  },
+  {
+    "name": "John McCarthy",
+    "image": "/images/figures/john-mccarthy.webp",
+    "query": "John McCarthy portrait",
+    "sourcePage": "https://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)",
+    "sourceDomain": "Wikipedia",
+    "sourceTitle": "John McCarthy (computer scientist) - Wikipedia",
+    "width": 2013,
+    "height": 2332
+  },
+  {
+    "name": "Robin Milner",
+    "image": "/images/figures/robin-milner.webp",
+    "query": "Robin Milner portrait",
+    "sourcePage": "https://en.wikipedia.org/wiki/Robin_Milner",
+    "sourceDomain": "Wikipedia",
+    "sourceTitle": "Robin Milner - Wikipedia",
+    "width": 250,
+    "height": 320
+  },
+  {
+    "name": "Joe Armstrong",
+    "image": "/images/figures/joe-armstrong.webp",
+    "query": "Joe Armstrong portrait",
+    "sourcePage": "https://en.wikipedia.org/wiki/Joe_Armstrong_(programmer)",
+    "sourceDomain": "Wikipedia",
+    "sourceTitle": "Joe Armstrong (programmer) - Wikipedia",
+    "width": 250,
+    "height": 318
+  },
+  {
+    "name": "Martin Sústrik",
+    "image": "/images/figures/martin-sustrik.webp",
+    "query": "Martin Sústrik portrait",
+    "sourcePage": "https://www.youtube.com/watch?v=_S-kcN78HX8",
+    "sourceDomain": "YouTube",
+    "sourceTitle": "Martin Sústrik - ZeroMQ / Nanomsg (WebElement #29)",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "name": "Nathaniel J. Smith",
+    "image": "/images/figures/nathaniel-j-smith.webp",
+    "query": "Nathaniel J. Smith portrait",
+    "sourcePage": "https://www.youtube.com/watch?v=oLkfnc_UMcE",
+    "sourceDomain": "YouTube",
+    "sourceTitle": "Nathaniel J. Smith - Trio: Async concurrency for mere mortals - PyCon 2018",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "name": "Roman Elizarov",
+    "image": "/images/figures/roman-elizarov.webp",
+    "query": "Roman Elizarov portrait",
+    "sourcePage": "https://elizarov.medium.com/structured-concurrency-anniversary-f2cc748b2401",
+    "sourceDomain": "Roman Elizarov - Medium",
+    "sourceTitle": "Structured Concurrency Anniversary | by Roman Elizarov | Medium",
+    "width": 4000,
+    "height": 2256
+  },
+  {
+    "name": "Martin Odersky",
+    "image": "/images/figures/martin-odersky.webp",
+    "query": "Martin Odersky portrait",
+    "sourcePage": "https://he.wikipedia.org/wiki/d:Q847990",
+    "sourceDomain": "Wikidata",
+    "sourceTitle": "Martin Odersky - Wikidata",
+    "width": 415,
+    "height": 640
+  }
+]
