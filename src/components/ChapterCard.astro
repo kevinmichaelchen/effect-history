@@ -11,9 +11,10 @@ export interface Props {
   linkToPage?: boolean;
 }
 
+import { base } from "../lib/base";
 const { chapterNumber, title, slug, summary, meta, readingTime, linkToPage = false } = Astro.props;
 const era = meta ? eras[meta.eraIndex] : undefined;
-const href = linkToPage ? `/chapters/${slug}` : `#${slug}`;
+const href = linkToPage ? base(`/chapters/${slug}`) : `#${slug}`;
 ---
 
 <div class="chapter-card glass-card group rounded-2xl p-5" data-href={href}>

@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import { papers, paperCategories } from "../data/papers";
 import { splitMarkdownByChapter } from "../lib/chapters";
+import { base } from "../lib/base";
 
 const allChapters = await splitMarkdownByChapter();
 const chapterSlugs: Record<string, string> = {};
@@ -19,7 +20,7 @@ const papersByCategory = paperCategories.map((category) => ({
 <BaseLayout title="Seminal Papers — Effect Lineage">
   <main id="main-content" class="mx-auto max-w-6xl px-6 pb-16 pt-6 md:px-8">
     <Breadcrumbs items={[
-      { label: "Home", href: "/" },
+      { label: "Home", href: base("/") },
       { label: "Seminal Papers" },
     ]} />
 
@@ -63,7 +64,7 @@ const papersByCategory = paperCategories.map((category) => ({
                   const slug = chapterSlugs[ch];
                   return (
                     <a
-                      href={slug ? `/chapters/${slug}` : "#"}
+                      href={slug ? base(`/chapters/${slug}`) : "#"}
                       class="border-theme-subtle text-theme-link rounded-full border px-2 py-0.5 text-xs no-underline"
                     >
                       Ch. {ch}

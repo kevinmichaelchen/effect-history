@@ -8,6 +8,7 @@ export interface Props {
   linkToChapterPages?: boolean;
 }
 
+import { base } from "../lib/base";
 const { term, definition, link, chapters, chapterSlugs = {}, linkToChapterPages = false } = Astro.props;
 ---
 
@@ -24,7 +25,7 @@ const { term, definition, link, chapters, chapterSlugs = {}, linkToChapterPages 
   <dd class="mt-1.5 flex flex-wrap gap-1">
     {chapters.map((ch) => {
       const slug = chapterSlugs[ch];
-      const href = linkToChapterPages && slug ? `/chapters/${slug}` : `#ch-${ch}`;
+      const href = linkToChapterPages && slug ? base(`/chapters/${slug}`) : `#ch-${ch}`;
       return (
         <a
           href={href}

@@ -1,5 +1,6 @@
 ---
 import { eras, type FigureMeta, type Era } from "../data/chapters";
+import { base } from "../lib/base";
 
 export interface Props {
   name: string;
@@ -41,7 +42,7 @@ const { name, image, sourcePage, meta, era, chapterSlugs = {}, linkToChapterPage
         )}
         {meta?.chapters.map((ch) => {
           const slug = chapterSlugs[ch];
-          const href = linkToChapterPages && slug ? `/chapters/${slug}` : `#ch-${ch}`;
+          const href = linkToChapterPages && slug ? base(`/chapters/${slug}`) : `#ch-${ch}`;
           return <a href={href}>Ch. {ch}</a>;
         })}
       </div>

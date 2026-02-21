@@ -1,6 +1,7 @@
 ---
 import { eras, timelineEvents } from "../data/chapters";
 import EraLegend from "./EraLegend.astro";
+import { base } from "../lib/base";
 
 export interface Props {
   /** If true, timeline nodes link to chapter pages instead of anchors */
@@ -25,7 +26,7 @@ const { linkToPages = false, chapterSlugs = {} } = Astro.props;
     {timelineEvents.map((event) => {
       const era = eras[event.eraIndex];
       const chapterSlug = chapterSlugs[event.chapter];
-      const href = linkToPages && chapterSlug ? `/chapters/${chapterSlug}` : (event.link || undefined);
+      const href = linkToPages && chapterSlug ? base(`/chapters/${chapterSlug}`) : (event.link || undefined);
       const Tag = href ? "a" : "span";
       return (
         <Tag

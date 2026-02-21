@@ -4,12 +4,13 @@ export interface Props {
   next?: { slug: string; title: string; chapterNumber: string };
 }
 
+import { base } from "../lib/base";
 const { prev, next } = Astro.props;
 ---
 
 <nav class="prev-next-nav mt-10 grid gap-4 sm:grid-cols-2" aria-label="Chapter navigation">
   {prev ? (
-    <a href={`/chapters/${prev.slug}`} class="prev-next-link glass-card rounded-xl p-4 no-underline">
+    <a href={base(`/chapters/${prev.slug}`)} class="prev-next-link glass-card rounded-xl p-4 no-underline">
       <span class="text-theme-secondary text-xs font-semibold uppercase tracking-wider">&larr; Previous</span>
       <span class="text-theme-primary mt-1 block font-display text-base">
         Ch. {prev.chapterNumber}: {prev.title.replace(/^\d+\.\s*/, "")}
@@ -17,7 +18,7 @@ const { prev, next } = Astro.props;
     </a>
   ) : <div />}
   {next ? (
-    <a href={`/chapters/${next.slug}`} class="prev-next-link glass-card rounded-xl p-4 no-underline text-right">
+    <a href={base(`/chapters/${next.slug}`)} class="prev-next-link glass-card rounded-xl p-4 no-underline text-right">
       <span class="text-theme-secondary text-xs font-semibold uppercase tracking-wider">Next &rarr;</span>
       <span class="text-theme-primary mt-1 block font-display text-base">
         Ch. {next.chapterNumber}: {next.title.replace(/^\d+\.\s*/, "")}

@@ -11,6 +11,7 @@ export interface Props {
   activeSlug?: string;
 }
 
+import { base } from "../lib/base";
 const { chapters, activeSlug } = Astro.props;
 ---
 
@@ -22,7 +23,7 @@ const { chapters, activeSlug } = Astro.props;
       return (
         <li>
           <a
-            href={`/chapters/${chapter.slug}`}
+            href={base(`/chapters/${chapter.slug}`)}
             class:list={["chapter-link", { "font-semibold": isActive }]}
             style={isActive ? "color: var(--text-primary); border-left-color: var(--text-link);" : ""}
             aria-current={isActive ? "page" : undefined}
@@ -43,7 +44,7 @@ const { chapters, activeSlug } = Astro.props;
       <li><a href="https://effect.website/docs" target="_blank" rel="noreferrer">Effect docs</a></li>
       <li><a href="https://github.com/Effect-TS/effect" target="_blank" rel="noreferrer">Effect GitHub</a></li>
       <li><a href="https://discord.gg/effect-ts" target="_blank" rel="noreferrer">Effect Discord</a></li>
-      <li><a href="/effect-intellectual-lineage.md">Raw markdown</a></li>
+      <li><a href={base("/effect-intellectual-lineage.md")}>Raw markdown</a></li>
     </ul>
   </div>
 </nav>

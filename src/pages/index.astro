@@ -14,6 +14,7 @@ import {
 } from "../data/chapters";
 import { splitMarkdownByChapter } from "../lib/chapters";
 import figures from "../data/figures.generated.json";
+import { base } from "../lib/base";
 
 const allChapters = await splitMarkdownByChapter();
 
@@ -135,7 +136,7 @@ const heroYears = [
     <section class="glass-card mt-6 rounded-2xl p-6" aria-labelledby="start-here">
       <div class="flex items-center justify-between">
         <h2 id="start-here" class="text-theme-primary font-display text-2xl">Start Here (No <abbr title="Computer Science">CS</abbr> Degree Required)</h2>
-        <a href="/glossary" class="text-theme-link text-sm font-semibold">View all &rarr;</a>
+        <a href={base("/glossary")} class="text-theme-link text-sm font-semibold">View all &rarr;</a>
       </div>
       <p class="text-theme-secondary mt-2 max-w-3xl">
         This topic can look intimidating because of the terminology. Treat each chapter as a story about one big idea,
@@ -181,7 +182,7 @@ const heroYears = [
       <section class="mt-10" aria-labelledby="people-gallery">
         <div class="flex items-center justify-between">
           <h2 id="people-gallery" class="text-theme-primary font-display text-3xl">Historical Figures</h2>
-          <a href="/figures" class="text-theme-link text-sm font-semibold">View all &rarr;</a>
+          <a href={base("/figures")} class="text-theme-link text-sm font-semibold">View all &rarr;</a>
         </div>
         <p class="text-theme-secondary mt-2 max-w-3xl">
           The people who shaped the ideas behind <a href="https://effect.website" target="_blank" rel="noreferrer">Effect</a>.
@@ -205,7 +206,7 @@ const heroYears = [
         </ul>
         {sortedFigures.length > 6 && (
           <div class="mt-4 text-center">
-            <a href="/figures" class="border-theme-medium text-theme-link bg-theme-card inline-flex items-center gap-1 rounded-full border px-4 py-2 text-sm font-semibold no-underline">
+            <a href={base("/figures")} class="border-theme-medium text-theme-link bg-theme-card inline-flex items-center gap-1 rounded-full border px-4 py-2 text-sm font-semibold no-underline">
               See all {sortedFigures.length} figures &rarr;
             </a>
           </div>
@@ -217,13 +218,13 @@ const heroYears = [
     <section class="mt-10" aria-labelledby="papers-preview">
       <div class="flex items-center justify-between">
         <h2 id="papers-preview" class="text-theme-primary font-display text-3xl">Seminal Papers</h2>
-        <a href="/papers" class="text-theme-link text-sm font-semibold">View all &rarr;</a>
+        <a href={base("/papers")} class="text-theme-link text-sm font-semibold">View all &rarr;</a>
       </div>
       <p class="text-theme-secondary mt-2 max-w-3xl">
         The foundational papers and references behind the narrative, spanning 90 years of breakthroughs.
       </p>
       <div class="mt-4 text-center">
-        <a href="/papers" class="border-theme-medium text-theme-link bg-theme-card inline-flex items-center gap-1 rounded-full border px-4 py-2 text-sm font-semibold no-underline">
+        <a href={base("/papers")} class="border-theme-medium text-theme-link bg-theme-card inline-flex items-center gap-1 rounded-full border px-4 py-2 text-sm font-semibold no-underline">
           Browse all papers &rarr;
         </a>
       </div>

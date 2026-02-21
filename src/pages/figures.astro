@@ -6,6 +6,7 @@ import Breadcrumbs from "../components/Breadcrumbs.astro";
 import { eras, figureMeta } from "../data/chapters";
 import { splitMarkdownByChapter } from "../lib/chapters";
 import figures from "../data/figures.generated.json";
+import { base } from "../lib/base";
 
 const allChapters = await splitMarkdownByChapter();
 const chapterSlugs: Record<string, string> = {};
@@ -47,7 +48,7 @@ const figuresByEra = eras.map((era, eraIndex) => ({
 <BaseLayout title="Historical Figures — Effect Lineage">
   <main id="main-content" class="mx-auto max-w-6xl px-6 pb-16 pt-6 md:px-8">
     <Breadcrumbs items={[
-      { label: "Home", href: "/" },
+      { label: "Home", href: base("/") },
       { label: "Historical Figures" },
     ]} />
 
