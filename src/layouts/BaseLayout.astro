@@ -84,6 +84,14 @@ const {
             el.style.background = isDark ? dark : light;
           }
         });
+
+        document.querySelectorAll("[data-era-band]").forEach((el) => {
+          const light = el.getAttribute("data-light-color");
+          const dark = el.getAttribute("data-dark-color");
+          if (light && dark) {
+            el.style.background = isDark ? dark : light;
+          }
+        });
       }
 
       updateEraColors();

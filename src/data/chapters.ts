@@ -172,31 +172,32 @@ export const chapterMeta: Record<string, ChapterMeta> = {
 export type TimelineEvent = {
   year: number;
   label: string;
+  description: string;
   chapter: string;
   eraIndex: number;
   link?: string;
 };
 
 export const timelineEvents: TimelineEvent[] = [
-  { year: 1932, label: "Lambda calculus", chapter: "1", eraIndex: 0, link: "https://en.wikipedia.org/wiki/Lambda_calculus" },
-  { year: 1934, label: "Curry's observation", chapter: "2", eraIndex: 0, link: "https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence" },
-  { year: 1936, label: "Church-Turing thesis", chapter: "1", eraIndex: 0, link: "https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis" },
-  { year: 1945, label: "Category theory", chapter: "3", eraIndex: 0, link: "https://en.wikipedia.org/wiki/Category_theory" },
-  { year: 1958, label: "Lisp", chapter: "4", eraIndex: 1, link: "https://en.wikipedia.org/wiki/Lisp_(programming_language)" },
-  { year: 1965, label: "Monads & null", chapter: "3", eraIndex: 1, link: "https://en.wikipedia.org/wiki/Monad_(category_theory)" },
-  { year: 1969, label: "Howard manuscript", chapter: "2", eraIndex: 1 },
-  { year: 1973, label: "ML", chapter: "4", eraIndex: 1, link: "https://en.wikipedia.org/wiki/ML_(programming_language)" },
-  { year: 1986, label: "Erlang & effect systems", chapter: "8", eraIndex: 2, link: "https://en.wikipedia.org/wiki/Erlang_(programming_language)" },
-  { year: 1989, label: "Moggi: monads = effects", chapter: "3", eraIndex: 2, link: "https://www.cs.cmu.edu/~crary/819-f09/Moggi89.pdf" },
-  { year: 1990, label: "Haskell 1.0", chapter: "5", eraIndex: 2, link: "https://en.wikipedia.org/wiki/Haskell_(programming_language)" },
-  { year: 1992, label: "Wadler: Essence of FP", chapter: "5", eraIndex: 2 },
-  { year: 2003, label: "Algebraic effects", chapter: "6", eraIndex: 3 },
-  { year: 2004, label: "Scala", chapter: "9", eraIndex: 3, link: "https://en.wikipedia.org/wiki/Scala_(programming_language)" },
-  { year: 2009, label: "Effect handlers", chapter: "6", eraIndex: 3, link: "https://homepages.inf.ed.ac.uk/gdp/publications/Effect_Handlers.pdf" },
-  { year: 2016, label: "Structured concurrency", chapter: "8", eraIndex: 4 },
-  { year: 2018, label: "ZIO born", chapter: "9", eraIndex: 4, link: "https://degoes.net/articles/zio-history" },
-  { year: 2020, label: "Effect begins", chapter: "10", eraIndex: 4, link: "https://github.com/Effect-TS/effect" },
-  { year: 2024, label: "Effect 3.0", chapter: "10", eraIndex: 4, link: "https://effect.website" },
+  { year: 1932, label: "Lambda calculus", description: "Church introduces a formal system where every computation is a function — the seed of all functional programming.", chapter: "1", eraIndex: 0, link: "https://en.wikipedia.org/wiki/Lambda_calculus" },
+  { year: 1934, label: "Curry's observation", description: "Curry notices that types in combinatory logic mirror propositions in logic, laying the groundwork for the Curry-Howard correspondence.", chapter: "2", eraIndex: 0, link: "https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence" },
+  { year: 1936, label: "Church-Turing thesis", description: "Church and Turing independently prove that lambda calculus and Turing machines compute exactly the same things.", chapter: "1", eraIndex: 0, link: "https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis" },
+  { year: 1945, label: "Category theory", description: "Eilenberg and Mac Lane publish the first paper on category theory — the mathematics of structure and composition.", chapter: "3", eraIndex: 0, link: "https://en.wikipedia.org/wiki/Category_theory" },
+  { year: 1958, label: "Lisp", description: "McCarthy creates Lisp, bringing lambda calculus into a real programming language with higher-order functions and garbage collection.", chapter: "4", eraIndex: 1, link: "https://en.wikipedia.org/wiki/Lisp_(programming_language)" },
+  { year: 1965, label: "Monads & null", description: "Monads appear in category theory; separately, Hoare introduces null references — the 'billion-dollar mistake' that later motivates Option types.", chapter: "3", eraIndex: 1, link: "https://en.wikipedia.org/wiki/Monad_(category_theory)" },
+  { year: 1969, label: "Howard manuscript", description: "Howard circulates a manuscript making the types-as-propositions correspondence explicit: programs are proofs, types are theorems.", chapter: "2", eraIndex: 1 },
+  { year: 1973, label: "ML", description: "Milner creates ML with type inference and polymorphism — the template for every statically typed functional language since.", chapter: "4", eraIndex: 1, link: "https://en.wikipedia.org/wiki/ML_(programming_language)" },
+  { year: 1986, label: "Erlang & effect systems", description: "Armstrong creates Erlang with lightweight processes; independently, Lucassen and Gifford propose type-and-effect systems.", chapter: "8", eraIndex: 2, link: "https://en.wikipedia.org/wiki/Erlang_(programming_language)" },
+  { year: 1989, label: "Moggi: monads = effects", description: "Moggi's landmark paper shows that monads from category theory can model computational side effects — bridging math and programming.", chapter: "3", eraIndex: 2, link: "https://www.cs.cmu.edu/~crary/819-f09/Moggi89.pdf" },
+  { year: 1990, label: "Haskell 1.0", description: "The Haskell committee releases version 1.0, a purely functional language that will become the proving ground for monadic I/O.", chapter: "5", eraIndex: 2, link: "https://en.wikipedia.org/wiki/Haskell_(programming_language)" },
+  { year: 1992, label: "Wadler: Essence of FP", description: "Wadler publishes 'The Essence of Functional Programming', showing programmers how to use monads for I/O, state, and exceptions.", chapter: "5", eraIndex: 2 },
+  { year: 2003, label: "Algebraic effects", description: "Plotkin and Power propose algebraic effects — a composable alternative to monad transformers for structuring side effects.", chapter: "6", eraIndex: 3 },
+  { year: 2004, label: "Scala", description: "Odersky releases Scala, uniting object-oriented and functional programming on the JVM and enabling the ecosystem that produces ZIO.", chapter: "9", eraIndex: 3, link: "https://en.wikipedia.org/wiki/Scala_(programming_language)" },
+  { year: 2009, label: "Effect handlers", description: "Plotkin and Pretnar introduce effect handlers — interpreters for algebraic effects that decouple 'what' from 'how'.", chapter: "6", eraIndex: 3, link: "https://homepages.inf.ed.ac.uk/gdp/publications/Effect_Handlers.pdf" },
+  { year: 2016, label: "Structured concurrency", description: "Sústrik coins 'structured concurrency' with libdill; Smith refines it with Trio's nursery pattern for safe async lifetime management.", chapter: "8", eraIndex: 4 },
+  { year: 2018, label: "ZIO born", description: "De Goes creates ZIO for Scala — a full effect system with typed errors, dependency injection, and fibers that directly inspires Effect.", chapter: "9", eraIndex: 4, link: "https://degoes.net/articles/zio-history" },
+  { year: 2020, label: "Effect begins", description: "Arnaldi starts Effect, bringing ZIO's ideas to TypeScript with compile-time dependency tracking and structured concurrency.", chapter: "10", eraIndex: 4, link: "https://github.com/Effect-TS/effect" },
+  { year: 2024, label: "Effect 3.0", description: "Effect reaches 3.0 — a mature, production-ready toolkit synthesizing 90 years of CS into idiomatic TypeScript.", chapter: "10", eraIndex: 4, link: "https://effect.website" },
 ];
 
 export type FigureMeta = {
