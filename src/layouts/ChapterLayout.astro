@@ -160,4 +160,84 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
       });
     });
   </script>
+  <style>
+    /* Reveal animation — classes added by inline JS */
+    :global(.reveal-item) {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 440ms ease, transform 440ms ease;
+      will-change: opacity, transform;
+    }
+
+    :global(.reveal-item.is-visible) {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Glossary term underline — spans injected by inline JS */
+    :global(.glossary-term) {
+      border-bottom: 1px dashed var(--text-link);
+      cursor: help;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    :global(.glossary-term:hover) {
+      color: var(--text-link);
+    }
+
+    /* Tippy tooltip theme for glossary */
+    :global(.tippy-box[data-theme~="glossary"]) {
+      background: var(--bg-tooltip);
+      color: var(--text-tooltip);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      border-radius: 0.6rem;
+      box-shadow: 0 8px 24px rgb(0 0 0 / 18%);
+      padding: 0.5rem 0.65rem;
+      text-align: left;
+      max-width: 340px !important;
+    }
+
+    :global(.tippy-box[data-theme~="glossary"] .tippy-content) {
+      padding: 0;
+    }
+
+    :global(.tippy-box[data-theme~="glossary"] .tippy-arrow) {
+      color: var(--bg-tooltip);
+    }
+
+    :global(.tippy-box[data-theme~="glossary"] .tooltip-term) {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-link-hover);
+    }
+
+    :global(.tippy-box[data-theme~="glossary"] .tooltip-sep) {
+      color: var(--text-link-hover);
+      opacity: 0.5;
+    }
+
+    :global([data-theme="dark"] .tippy-box[data-theme~="glossary"] .tooltip-term) {
+      color: var(--text-link);
+    }
+
+    :global([data-theme="dark"] .tippy-box[data-theme~="glossary"] .tooltip-sep) {
+      color: var(--text-link);
+    }
+
+    :global(.tippy-box[data-theme~="glossary"] .tooltip-links) {
+      margin-top: 0.4rem;
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    :global(.tippy-box[data-theme~="glossary"] .tooltip-links a) {
+      color: var(--text-link-hover);
+    }
+
+    :global([data-theme="dark"] .tippy-box[data-theme~="glossary"] .tooltip-links a) {
+      color: var(--text-link);
+    }
+  </style>
 </BaseLayout>

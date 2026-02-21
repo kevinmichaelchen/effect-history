@@ -46,4 +46,21 @@ const posts = (await getCollection("blog"))
       })}
     </div>
   </main>
+
+  <style>
+    .blog-card {
+      transition: transform 200ms ease, box-shadow 200ms ease, background 300ms ease, border-color 300ms ease;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
+    }
+
+    .blog-tag {
+      border: 1px solid var(--border-subtle);
+      color: var(--text-link);
+      background: transparent;
+    }
+  </style>
 </BaseLayout>

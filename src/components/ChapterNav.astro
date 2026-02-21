@@ -47,3 +47,21 @@ const { chapters, activeSlug } = Astro.props;
     </ul>
   </div>
 </nav>
+
+<style>
+  .chapter-link {
+    display: block;
+    border-left: 2px solid var(--border-medium);
+    padding: 0.45rem 0 0.45rem 0.85rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+
+  .chapter-link:hover,
+  .chapter-link:focus-visible {
+    border-left-color: var(--text-link);
+    color: var(--text-primary);
+    transform: translateX(2px);
+  }
+</style>

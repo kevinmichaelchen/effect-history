@@ -60,3 +60,73 @@ const { name, image, sourcePage, meta, era, chapterSlugs = {}, linkToChapterPage
     )}
   </div>
 </li>
+
+<style>
+  .figure-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+
+  .figure-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 48px rgb(0 0 0 / 14%);
+  }
+
+  .figure-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgb(0 0 0 / 85%) 0%, rgb(0 0 0 / 40%) 40%, transparent 70%);
+    opacity: 0;
+    transition: opacity 350ms ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.2rem;
+    color: #f6f5f1;
+  }
+
+  .figure-card:hover .figure-overlay {
+    opacity: 1;
+  }
+
+  .figure-overlay .figure-contribution {
+    font-size: 0.85rem;
+    line-height: 1.45;
+    margin-top: 0.35rem;
+    opacity: 0.9;
+  }
+
+  .figure-overlay .figure-links {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .figure-overlay .figure-links a {
+    font-size: 0.75rem;
+    color: var(--color-teal-200);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .figure-overlay .figure-links a:hover {
+    color: #fff;
+  }
+
+  .figure-era-badge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    backdrop-filter: blur(6px);
+    background: rgb(0 0 0 / 45%);
+    color: #f6f5f1;
+  }
+</style>

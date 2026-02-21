@@ -25,3 +25,15 @@ const { prev, next } = Astro.props;
     </a>
   ) : <div />}
 </nav>
+
+<style>
+  .prev-next-link {
+    display: block;
+    transition: transform 200ms ease, box-shadow 200ms ease, background 300ms ease, border-color 300ms ease;
+  }
+
+  .prev-next-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
+  }
+</style>

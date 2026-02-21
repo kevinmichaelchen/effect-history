@@ -22,3 +22,38 @@
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
   </svg>
 </button>
+
+<style>
+  .theme-toggle {
+    appearance: none;
+    background: none;
+    border: 1px solid var(--border-subtle);
+    border-radius: 9999px;
+    cursor: pointer;
+    padding: 0.4rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 200ms ease, border-color 200ms ease;
+    color: var(--text-secondary);
+  }
+
+  .theme-toggle:hover {
+    background: var(--bg-card);
+    border-color: var(--text-link);
+    color: var(--text-link);
+  }
+
+  .theme-toggle svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .theme-toggle .icon-moon { display: none; }
+  .theme-toggle .icon-sun { display: block; }
+
+  :global([data-theme="dark"]) .theme-toggle .icon-moon { display: block; }
+  :global([data-theme="dark"]) .theme-toggle .icon-sun { display: none; }
+</style>

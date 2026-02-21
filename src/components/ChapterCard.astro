@@ -40,3 +40,28 @@ const href = linkToPage ? `/chapters/${slug}` : `#${slug}`;
     <p class="text-theme-secondary mt-2 text-xs">~{readingTime} min read</p>
   )}
 </a>
+
+<style>
+  .chapter-card-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+  }
+
+  .chapter-card-links a {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 9999px;
+    border: 1px solid var(--border-subtle);
+    text-decoration: none;
+    color: var(--text-link);
+    transition: background 160ms ease, color 160ms ease;
+    white-space: nowrap;
+  }
+
+  .chapter-card-links a:hover {
+    background: var(--text-link);
+    color: var(--bg-page);
+  }
+</style>

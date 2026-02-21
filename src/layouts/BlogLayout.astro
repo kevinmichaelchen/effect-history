@@ -115,4 +115,17 @@ const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
     window.addEventListener("scroll", updateActiveToc, { passive: true });
     updateActiveToc();
   </script>
+
+  <style>
+    .blog-tag {
+      border: 1px solid var(--border-subtle);
+      color: var(--text-link);
+      background: transparent;
+    }
+
+    .toc-link:hover {
+      border-left-color: var(--text-link) !important;
+      color: var(--text-primary) !important;
+    }
+  </style>
 </BaseLayout>
