@@ -239,5 +239,17 @@ const pageTitle = `Ch. ${chapterNumber}: ${title} — Effect Lineage`;
     :global([data-theme="dark"] .tippy-box[data-theme~="glossary"] .tooltip-links a) {
       color: var(--text-link);
     }
+
+    :global(.tippy-box[data-theme~="glossary"] code) {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      padding: 0.05rem 0.25rem;
+      border-radius: 0.25rem;
+      background: rgb(255 255 255 / 12%);
+    }
+
+    :global([data-theme="dark"] .tippy-box[data-theme~="glossary"] code) {
+      background: rgb(0 0 0 / 18%);
+    }
   </style>
 </BaseLayout>

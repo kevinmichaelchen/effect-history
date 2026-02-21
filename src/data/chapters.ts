@@ -367,14 +367,14 @@ export const plainLanguageGlossary = [
   {
     term: "Abstraction",
     definition:
-      "Creating a function by naming a parameter and writing a body. In lambda calculus, λx.x+1 abstracts over x.",
+      "Creating a function by naming a parameter and writing a body. In lambda calculus, <code>λx.x+1</code> abstracts over <code>x</code>.",
     link: "https://en.wikipedia.org/wiki/Lambda_calculus#lambdaAbstraction",
     chapters: ["1"],
   },
   {
     term: "Application",
     definition:
-      "Calling a function by giving it an argument. In lambda calculus, (λx.x+1) 5 applies the function to 5, yielding 6.",
+      "Calling a function by giving it an argument. In lambda calculus, <code>(λx.x+1) 5</code> applies the function to 5, yielding 6.",
     link: "https://en.wikipedia.org/wiki/Lambda_calculus#Beta_reduction",
     chapters: ["1"],
   },
@@ -404,7 +404,7 @@ export const plainLanguageGlossary = [
   {
     term: "Curry-Howard Correspondence",
     definition:
-      "The deep discovery that types in programming correspond to propositions in logic, and programs correspond to proofs. Writing a function with type A → B is proving that A implies B.",
+      "The deep discovery that types in programming correspond to propositions in logic, and programs correspond to proofs. Writing a function with type <code>A → B</code> is proving that A implies B.",
     link: "https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence",
     chapters: ["2", "10"],
   },
@@ -425,7 +425,7 @@ export const plainLanguageGlossary = [
   {
     term: "Combinator",
     definition:
-      "A function that has no free variables — it only refers to its own parameters. K and S are fundamental combinators that can express any computation when combined.",
+      "A function that has no free variables — it only refers to its own parameters. <code>K</code> and <code>S</code> are fundamental combinators that can express any computation when combined.",
     link: "https://en.wikipedia.org/wiki/Combinatory_logic",
     chapters: ["1", "2"],
   },
@@ -446,7 +446,7 @@ export const plainLanguageGlossary = [
   {
     term: "Beta-Reduction",
     definition:
-      "The act of calling a function: substituting the argument for the parameter in the body. (λx.x+1) 5 beta-reduces to 5+1. This is both running a program and simplifying a proof.",
+      "The act of calling a function: substituting the argument for the parameter in the body. <code>(λx.x+1) 5</code> beta-reduces to <code>5+1</code>. This is both running a program and simplifying a proof.",
     link: "https://en.wikipedia.org/wiki/Lambda_calculus#Beta_reduction",
     chapters: ["1", "2"],
   },
@@ -460,14 +460,14 @@ export const plainLanguageGlossary = [
   {
     term: "Product Type",
     definition:
-      "A type that bundles values together — like a struct or tuple. A pair [string, number] is a product type. In logic, it corresponds to 'and' (conjunction).",
+      "A type that bundles values together — like a struct or tuple. A pair <code>[string, number]</code> is a product type. In logic, it corresponds to 'and' (conjunction).",
     link: "https://en.wikipedia.org/wiki/Product_type",
     chapters: ["2", "7"],
   },
   {
     term: "Sum Type",
     definition:
-      "A type that is one of several variants — like 'either a string or a number.' In TypeScript, A | B is a sum type. In logic, it corresponds to 'or' (disjunction).",
+      "A type that is one of several variants — like 'either a string or a number.' In TypeScript, <code>A | B</code> is a sum type. In logic, it corresponds to 'or' (disjunction).",
     link: "https://en.wikipedia.org/wiki/Tagged_union",
     chapters: ["2", "7"],
   },
@@ -490,21 +490,21 @@ export const plainLanguageGlossary = [
   {
     term: "Morphism",
     definition:
-      "An arrow between two objects in a category. In programming, a function from type A to type B is a morphism. The concept generalizes far beyond functions.",
+      "An arrow between two objects in a category. In programming, a function from type <code>A</code> to type <code>B</code> is a morphism. The concept generalizes far beyond functions.",
     link: "https://en.wikipedia.org/wiki/Morphism",
     chapters: ["3"],
   },
   {
     term: "Functor",
     definition:
-      "A structure-preserving map between categories. In programming, anything with a .map() method — arrays, options, promises — is a functor.",
+      "A structure-preserving map between categories. In programming, anything with a <code>.map()</code> method — arrays, options, promises — is a functor.",
     link: "https://en.wikipedia.org/wiki/Functor",
     chapters: ["3", "5"],
   },
   {
     term: "Natural Transformation",
     definition:
-      "A systematic way to convert between two functors while respecting their structure. Converting every Option<T> to an Array<T> in a consistent way is a natural transformation.",
+      "A systematic way to convert between two functors while respecting their structure. Converting every <code>Option&lt;T&gt;</code> to an <code>Array&lt;T&gt;</code> in a consistent way is a natural transformation.",
     link: "https://en.wikipedia.org/wiki/Natural_transformation",
     chapters: ["3"],
   },
@@ -541,7 +541,7 @@ export const plainLanguageGlossary = [
   {
     term: "Higher-Order Functions",
     definition:
-      "Functions that take other functions as arguments or return functions as results. Array.map() is a higher-order function — it takes a function and applies it to each element.",
+      "Functions that take other functions as arguments or return functions as results. <code>Array.map()</code> is a higher-order function — it takes a function and applies it to each element.",
     link: "https://en.wikipedia.org/wiki/Higher-order_function",
     chapters: ["1", "4"],
   },
@@ -555,14 +555,14 @@ export const plainLanguageGlossary = [
   {
     term: "Type Inference",
     definition:
-      "The compiler's ability to figure out types automatically without you writing them. When you write const x = 5, TypeScript infers x is a number.",
+      "The compiler's ability to figure out types automatically without you writing them. When you write <code>const x = 5</code>, TypeScript infers <code>x</code> is a number.",
     link: "https://en.wikipedia.org/wiki/Type_inference",
     chapters: ["4", "9"],
   },
   {
     term: "Polymorphism",
     definition:
-      "Writing code that works with many types. A function sort<T>(list: T[]) is polymorphic — it works for arrays of any type, not just one specific type.",
+      "Writing code that works with many types. A function <code>sort&lt;T&gt;(list: T[])</code> is polymorphic — it works for arrays of any type, not just one specific type.",
     link: "https://en.wikipedia.org/wiki/Polymorphism_(computer_science)",
     chapters: ["4", "5", "6"],
   },
@@ -620,14 +620,14 @@ export const plainLanguageGlossary = [
   {
     term: "Do Notation",
     definition:
-      "Syntactic sugar that makes monadic code look like sequential imperative code. Haskell's 'do' block, Scala's 'for' comprehension, and Effect's 'Effect.gen' all serve this purpose.",
+      "Syntactic sugar that makes monadic code look like sequential imperative code. Haskell's <code>do</code> block, Scala's <code>for</code> comprehension, and Effect's <code>Effect.gen</code> all serve this purpose.",
     link: "https://en.wikipedia.org/wiki/Monad_(functional_programming)#do_notation",
     chapters: ["5", "10"],
   },
   {
     term: "Bind",
     definition:
-      "The operation that chains monadic computations. It takes a monadic value and a function, unwraps the value, passes it to the function, and returns a new monadic value. Also called flatMap or >>=.",
+      "The operation that chains monadic computations. It takes a monadic value and a function, unwraps the value, passes it to the function, and returns a new monadic value. Also called <code>flatMap</code> or <code>&gt;&gt;=</code>.",
     link: "https://en.wikipedia.org/wiki/Monad_(functional_programming)#Overview",
     chapters: ["5", "10"],
   },
@@ -664,7 +664,7 @@ export const plainLanguageGlossary = [
   {
     term: "Monad Transformer",
     definition:
-      "A way to combine monads by stacking them — like wrapping async inside error-handling inside state. Notoriously complex: N effects require N² boilerplate. Algebraic effects avoid this.",
+      "A way to combine monads by stacking them — like wrapping async inside error-handling inside state. Notoriously complex: <code>N</code> effects require <code>N²</code> boilerplate. Algebraic effects avoid this.",
     link: "https://en.wikipedia.org/wiki/Monad_transformer",
     chapters: ["6", "9"],
   },
@@ -687,28 +687,28 @@ export const plainLanguageGlossary = [
   {
     term: "Option",
     definition:
-      "A type that explicitly represents 'a value or nothing' — Some(value) or None. Unlike null, the type system forces you to handle the 'nothing' case. Also called Maybe in Haskell.",
+      "A type that explicitly represents 'a value or nothing' — <code>Some(value)</code> or <code>None</code>. Unlike null, the type system forces you to handle the 'nothing' case. Also called <code>Maybe</code> in Haskell.",
     link: "https://effect.website/docs/data-types/option/",
     chapters: ["7", "10"],
   },
   {
     term: "Either",
     definition:
-      "A type that represents one of two possibilities — typically Right(success) or Left(error). It forces explicit error handling because the type system won't let you ignore the Left case.",
+      "A type that represents one of two possibilities — typically <code>Right(success)</code> or <code>Left(error)</code>. It forces explicit error handling because the type system won't let you ignore the <code>Left</code> case.",
     link: "https://effect.website/docs/data-types/either/",
     chapters: ["7", "10"],
   },
   {
     term: "Discriminated Union",
     definition:
-      "A type where each variant has a tag field that identifies which variant it is. TypeScript's union types with a shared literal field (like 'type: \"success\"') are discriminated unions.",
+      "A type where each variant has a tag field that identifies which variant it is. TypeScript's union types with a shared literal field (like <code>type: \"success\"</code>) are discriminated unions.",
     link: "https://en.wikipedia.org/wiki/Tagged_union",
     chapters: ["7", "10"],
   },
   {
     term: "Exhaustive",
     definition:
-      "Handling every possible case with no gaps. When the compiler checks that your switch/match covers all variants of a union type, that's exhaustiveness checking.",
+      "Handling every possible case with no gaps. When the compiler checks that your <code>switch</code>/<code>match</code> covers all variants of a union type, that's exhaustiveness checking.",
     link: "https://en.wikipedia.org/wiki/Exhaustive_testing",
     chapters: ["7"],
   },
@@ -754,28 +754,28 @@ export const plainLanguageGlossary = [
   {
     term: "Contravariance",
     definition:
-      "A type relationship where subtyping flows in the opposite direction. If Dog extends Animal, then Handler<Animal> can be used where Handler<Dog> is expected. In Effect, the R parameter is contravariant.",
+      "A type relationship where subtyping flows in the opposite direction. If <code>Dog extends Animal</code>, then <code>Handler&lt;Animal&gt;</code> can be used where <code>Handler&lt;Dog&gt;</code> is expected. In Effect, the <code>R</code> parameter is contravariant.",
     link: "https://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)",
     chapters: ["9", "10"],
   },
   {
     term: "Covariance",
     definition:
-      "A type relationship where subtyping flows in the same direction. If Dog extends Animal, then Array<Dog> can be used where Array<Animal> is expected. In Effect, A and E are covariant.",
+      "A type relationship where subtyping flows in the same direction. If <code>Dog extends Animal</code>, then <code>Array&lt;Dog&gt;</code> can be used where <code>Array&lt;Animal&gt;</code> is expected. In Effect, <code>A</code> and <code>E</code> are covariant.",
     link: "https://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)",
     chapters: ["9", "10"],
   },
   {
     term: "Effect",
     definition:
-      "A computation that may need services, may fail, and may produce a value. Effect<A, E, R> makes all three explicit in the type, so the compiler can verify correctness.",
+      "A computation that may need services, may fail, and may produce a value. <code>Effect&lt;A, E, R&gt;</code> makes all three explicit in the type, so the compiler can verify correctness.",
     link: "https://effect.website/docs/getting-started/the-effect-type/",
     chapters: ["6", "9", "10"],
   },
   {
     term: "Intersection Type",
     definition:
-      "A type that combines multiple types with '&'. A value of type A & B has all the properties of both A and B. Effect uses this to merge environmental requirements automatically.",
+      "A type that combines multiple types with <code>&amp;</code>. A value of type <code>A &amp; B</code> has all the properties of both <code>A</code> and <code>B</code>. Effect uses this to merge environmental requirements automatically.",
     link: "https://www.typescriptlang.org/docs/handbook/2/objects.html#intersection-types",
     chapters: ["9", "10"],
   },
@@ -798,14 +798,14 @@ export const plainLanguageGlossary = [
   {
     term: "Generics",
     definition:
-      "Type parameters that let code work with many types. Effect<A, E, R> uses three generic parameters so one type can describe any combination of success, error, and requirements.",
+      "Type parameters that let code work with many types. <code>Effect&lt;A, E, R&gt;</code> uses three generic parameters so one type can describe any combination of success, error, and requirements.",
     link: "https://www.typescriptlang.org/docs/handbook/2/generics.html",
     chapters: ["10"],
   },
   {
     term: "Conditional Types",
     definition:
-      "TypeScript types that choose between outcomes based on a condition, like: T extends string ? 'yes' : 'no'. Effect uses these for type-level computation when composing effects.",
+      "TypeScript types that choose between outcomes based on a condition, like: <code>T extends string ? 'yes' : 'no'</code>. Effect uses these for type-level computation when composing effects.",
     link: "https://www.typescriptlang.org/docs/handbook/2/conditional-types.html",
     chapters: ["10"],
   },
@@ -849,7 +849,7 @@ export const plainLanguageGlossary = [
   {
     term: "Desugar",
     definition:
-      "To transform syntactic sugar (convenient shorthand) into its underlying form. 'do { x <- m; f x }' desugars to 'm >>= (\\x -> f x)'. The sugar is for humans; the core form is for the compiler.",
+      "To transform syntactic sugar (convenient shorthand) into its underlying form. <code>do { x &lt;- m; f x }</code> desugars to <code>m &gt;&gt;= (\\x -&gt; f x)</code>. The sugar is for humans; the core form is for the compiler.",
     link: "https://en.wikipedia.org/wiki/Syntactic_sugar",
     chapters: ["5", "10"],
   },
