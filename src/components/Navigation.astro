@@ -11,54 +11,199 @@ const navLinks = [
   { href: "/papers", label: "Papers" },
   { href: "/blog", label: "Blog" },
 ];
+
+function isActive(href: string) {
+  if (href === "/") return currentPath === "/";
+  const match = href.startsWith("/chapters/") ? "/chapters" : href;
+  return currentPath.startsWith(match);
+}
 ---
 
 <nav class="site-nav" aria-label="Main navigation">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 md:px-8">
-    <a href="/" class="text-theme-primary font-display text-lg font-semibold no-underline">
-      Effect Lineage
+  <div class="nav-inner">
+    <!-- Brand -->
+    <a href="/" class="nav-brand">
+      <span class="nav-lambda" aria-hidden="true">&lambda;</span>
+      <span class="nav-title">Effect Lineage</span>
     </a>
-    <div class="flex items-center gap-1">
-      <ul class="m-0 flex list-none gap-1 p-0">
-        {navLinks.map((link) => {
-          const active = link.href === "/" ? currentPath === "/" : currentPath.startsWith(link.href === "/chapters/1-the-lambda-calculus-computation-as-function-19321936" ? "/chapters" : link.href);
-          return (
-            <li>
-              <a
-                href={link.href}
-                class:list={["nav-link", { "nav-link-active": active }]}
-              >
-                {link.label}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+
+    <!-- Desktop links -->
+    <ul class="nav-links" role="list">
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={["nav-link", { active: isActive(link.href) }]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Right-side controls -->
+    <div class="nav-controls">
       <DarkModeToggle />
+      <button
+        class="nav-burger"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="burger-bar" aria-hidden="true"></span>
+        <span class="burger-bar" aria-hidden="true"></span>
+        <span class="burger-bar" aria-hidden="true"></span>
+      </button>
     </div>
+  </div>
+
+  <!-- Mobile overlay menu -->
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <ul role="list">
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={["mobile-link", { active: isActive(link.href) }]}
+          >
+            <span class="mobile-link-text">{link.label}</span>
+            {isActive(link.href) && <span class="mobile-active-dot" aria-hidden="true" />}
+          </a>
+        </li>
+      ))}
+    </ul>
   </div>
 </nav>
 
+<script>
+  const burger = document.querySelector<HTMLButtonElement>(".nav-burger");
+  const menu = document.getElementById("mobile-menu");
+  const nav = document.querySelector(".site-nav");
+
+  function closeMenu() {
+    menu?.setAttribute("aria-hidden", "true");
+    burger?.setAttribute("aria-expanded", "false");
+    burger?.classList.remove("is-open");
+    nav?.classList.remove("menu-open");
+  }
+
+  function openMenu() {
+    menu?.setAttribute("aria-hidden", "false");
+    burger?.setAttribute("aria-expanded", "true");
+    burger?.classList.add("is-open");
+    nav?.classList.add("menu-open");
+  }
+
+  burger?.addEventListener("click", () => {
+    const isOpen = burger.getAttribute("aria-expanded") === "true";
+    isOpen ? closeMenu() : openMenu();
+  });
+
+  // Close on Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
+
+  // Close when clicking a mobile link
+  menu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+</script>
+
 <style>
+  /* ===== NAV BAR ===== */
   .site-nav {
-    border-bottom: 1px solid var(--border-subtle);
-    background: var(--bg-card);
-    backdrop-filter: blur(8px);
     position: sticky;
     top: 0;
-    z-index: 40;
+    z-index: 50;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
     transition: background 300ms ease, border-color 300ms ease;
   }
 
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0.6rem 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .nav-inner {
+      padding: 0.6rem 2rem;
+    }
+  }
+
+  /* ===== BRAND ===== */
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: color 200ms ease;
+    flex-shrink: 0;
+  }
+
+  .nav-brand:hover {
+    color: var(--text-link);
+  }
+
+  .nav-brand:hover .nav-lambda {
+    border-color: var(--text-link);
+    color: var(--text-link);
+    transform: scale(1.08);
+  }
+
+  .nav-lambda {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.65rem;
+    height: 1.65rem;
+    border-radius: 0.4rem;
+    border: 1px solid var(--border-medium);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    color: var(--text-link);
+    transition: border-color 200ms ease, color 200ms ease, transform 200ms ease;
+  }
+
+  .nav-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  /* ===== DESKTOP LINKS ===== */
+  .nav-links {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.15rem;
+  }
+
+  @media (min-width: 768px) {
+    .nav-links {
+      display: flex;
+    }
+  }
+
   .nav-link {
-    display: inline-block;
-    padding: 0.35rem 0.7rem;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
+    display: block;
+    padding: 0.32rem 0.65rem;
+    border-radius: 0.45rem;
+    font-size: 0.84rem;
     font-weight: 500;
     text-decoration: none;
     color: var(--text-secondary);
     transition: background 160ms ease, color 160ms ease;
+    white-space: nowrap;
   }
 
   .nav-link:hover {
@@ -66,12 +211,154 @@ const navLinks = [
     color: var(--text-primary);
   }
 
-  .nav-link-active {
+  .nav-link.active {
     color: var(--text-link);
     background: rgb(38 106 103 / 8%);
   }
 
-  :global([data-theme="dark"]) .nav-link-active {
+  :global([data-theme="dark"]) .nav-link.active {
     background: rgb(146 210 206 / 10%);
+  }
+
+  /* ===== CONTROLS (dark toggle + burger) ===== */
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-shrink: 0;
+  }
+
+  /* ===== BURGER BUTTON ===== */
+  .nav-burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4.5px;
+    width: 2.2rem;
+    height: 2.2rem;
+    padding: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.45rem;
+    background: transparent;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+  }
+
+  .nav-burger:hover {
+    border-color: var(--text-link);
+    color: var(--text-link);
+  }
+
+  @media (min-width: 768px) {
+    .nav-burger {
+      display: none;
+    }
+  }
+
+  .burger-bar {
+    display: block;
+    width: 14px;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 1px;
+    transition: transform 280ms ease, opacity 200ms ease;
+    transform-origin: center;
+  }
+
+  /* Animate to X */
+  .nav-burger.is-open .burger-bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .nav-burger.is-open .burger-bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  .nav-burger.is-open .burger-bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* ===== MOBILE MENU ===== */
+  .mobile-menu {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 320ms ease, opacity 240ms ease;
+    border-top: 1px solid transparent;
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+  }
+
+  .mobile-menu > ul {
+    overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-menu[aria-hidden="false"] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    border-top-color: var(--border-subtle);
+  }
+
+  @media (min-width: 768px) {
+    .mobile-menu {
+      display: none;
+    }
+  }
+
+  .mobile-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: background 160ms ease, color 160ms ease;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .mobile-link:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-link:hover {
+    background: rgb(38 106 103 / 5%);
+    color: var(--text-primary);
+  }
+
+  :global([data-theme="dark"]) .mobile-link:hover {
+    background: rgb(146 210 206 / 6%);
+  }
+
+  .mobile-link.active {
+    color: var(--text-link);
+  }
+
+  .mobile-link.active .mobile-link-text {
+    font-weight: 600;
+  }
+
+  .mobile-active-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--text-link);
+    flex-shrink: 0;
+  }
+
+  /* Subtle shift on the nav bar when menu is open */
+  .site-nav.menu-open {
+    box-shadow: 0 4px 24px rgb(35 32 28 / 8%);
+  }
+
+  :global([data-theme="dark"]) .site-nav.menu-open {
+    box-shadow: 0 4px 24px rgb(0 0 0 / 20%);
   }
 </style>
