@@ -1,7 +1,7 @@
 ---
 title: "Effect vs errore — Why 'Errors as Values' Isn't Enough"
 description: "errore.org offers typed errors for TypeScript, but Effect's intellectual lineage reveals why programs-as-values demands far more."
-date: 2025-02-21
+date: 2025-02-21T09:00:00
 tags: ["effect", "errore", "type-safety", "functional-programming"]
 ---
 
