@@ -112,19 +112,19 @@ function getDomain(url: string): string {
               <span class="resource-type-icon flex-shrink-0 mt-0.5" aria-hidden="true">
                 {/* Lucide: book-text */}
                 {resource.category === "Blog Post" && (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/><path d="M8 11h8"/><path d="M8 7h6"/></svg>
+                  <svg class="icon-book" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="book-cover" d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/><path class="book-line-1" d="M8 11h8"/><path class="book-line-2" d="M8 7h6"/></svg>
                 )}
-                {/* Lucide: circle-play */}
+                {/* Lucide: clap */}
                 {resource.category === "Video" && (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                  <svg class="icon-clap" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path class="clap-top" d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>
                 )}
                 {/* Lucide: terminal */}
                 {resource.category === "Interactive" && (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                  <svg class="icon-terminal" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline class="terminal-chevron" points="4 17 10 11 4 5"/><line class="terminal-cursor" x1="12" y1="19" x2="20" y2="19"/></svg>
                 )}
                 {/* Lucide: earth */}
                 {resource.category === "Website" && (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
+                  <svg class="icon-earth" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="earth-land" d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path class="earth-land" d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path class="earth-land" d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
                 )}
               </span>
             </div>
@@ -386,10 +386,98 @@ function getDomain(url: string): string {
     .resource-type-icon {
       color: var(--cat-text);
       opacity: 0.6;
+      transition: opacity 200ms ease;
     }
 
     :global([data-theme="dark"]) .resource-type-icon {
       color: var(--cat-dark-text);
+    }
+
+    .resource-card:hover .resource-type-icon {
+      opacity: 1;
+    }
+
+    /* ===== ICON ANIMATIONS (on card hover) ===== */
+
+    /* Book: text lines draw in */
+    .icon-book .book-line-1,
+    .icon-book .book-line-2 {
+      stroke-dasharray: 10;
+      stroke-dashoffset: 10;
+      transition: stroke-dashoffset 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .icon-book .book-line-2 {
+      transition-delay: 100ms;
+    }
+
+    .resource-card:hover .icon-book .book-line-1,
+    .resource-card:hover .icon-book .book-line-2 {
+      stroke-dashoffset: 0;
+    }
+
+    /* Clap: top board snaps down */
+    .icon-clap .clap-top {
+      transform-origin: 3px 11px;
+      transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .resource-card:hover .icon-clap .clap-top {
+      animation: clap-snap 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes clap-snap {
+      0% { transform: rotate(0deg); }
+      30% { transform: rotate(-14deg); }
+      60% { transform: rotate(2deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* Terminal: chevron nudges right, cursor blinks */
+    .icon-terminal .terminal-chevron {
+      transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .resource-card:hover .icon-terminal .terminal-chevron {
+      transform: translateX(1.5px);
+    }
+
+    .resource-card:hover .icon-terminal .terminal-cursor {
+      animation: cursor-blink 800ms step-end 2;
+    }
+
+    @keyframes cursor-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Earth: gentle spin */
+    .icon-earth .earth-land {
+      transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform-origin: center;
+    }
+
+    .resource-card:hover .icon-earth {
+      animation: earth-spin 800ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes earth-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .icon-book .book-line-1,
+      .icon-book .book-line-2,
+      .icon-clap .clap-top,
+      .icon-terminal .terminal-chevron,
+      .icon-terminal .terminal-cursor,
+      .icon-earth,
+      .icon-earth .earth-land {
+        animation: none !important;
+        transition: none !important;
+      }
     }
 
     @keyframes resource-filter-in {
