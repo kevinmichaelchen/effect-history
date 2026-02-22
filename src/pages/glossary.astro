@@ -27,16 +27,37 @@ for (const ch of allChapters) {
     </p>
 
     <dl class="mt-6 grid gap-3 md:grid-cols-2">
-      {plainLanguageGlossary.map((entry) => (
-        <GlossaryCard
-          term={entry.term}
-          definition={entry.definition}
-          link={entry.link}
-          chapters={entry.chapters}
-          chapterSlugs={chapterSlugs}
-          linkToChapterPages
-        />
+      {plainLanguageGlossary.map((entry, i) => (
+        <div class="card-reveal" style={`transition-delay: ${i * 80}ms;`}>
+          <GlossaryCard
+            term={entry.term}
+            definition={entry.definition}
+            link={entry.link}
+            chapters={entry.chapters}
+            chapterSlugs={chapterSlugs}
+            linkToChapterPages
+          />
+        </div>
       ))}
     </dl>
   </main>
+
+  <script is:inline>
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll(".card-reveal").forEach((el) => {
+        revealObserver.observe(el);
+      });
+    }
+  </script>
 </BaseLayout>

@@ -15,7 +15,7 @@ export interface Props {
 const { name, image, sourcePage, meta, era, chapterSlugs = {}, linkToChapterPages = false } = Astro.props;
 ---
 
-<li class="glass-card figure-card rounded-2xl overflow-hidden">
+<li class="glass-card figure-card rounded-3xl overflow-hidden">
   <div class="relative">
     <img
       src={base(image)}
@@ -66,12 +66,13 @@ const { name, image, sourcePage, meta, era, chapterSlugs = {}, linkToChapterPage
   .figure-card {
     position: relative;
     overflow: hidden;
-    transition: transform 300ms ease, box-shadow 300ms ease;
+    transform-style: preserve-3d;
+    transition: transform 400ms ease, box-shadow 400ms ease;
   }
 
   .figure-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 48px rgb(0 0 0 / 14%);
+    transform: perspective(800px) rotateX(2deg) rotateY(-1deg) translateY(-6px);
+    box-shadow: 0 24px 48px -12px rgb(0 0 0 / 12%);
   }
 
   .figure-overlay {

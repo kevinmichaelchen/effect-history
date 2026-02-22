@@ -216,6 +216,11 @@ function isActive(href: string) {
     color: var(--text-primary);
   }
 
+  .nav-link:focus-visible {
+    outline: 2px solid var(--text-link);
+    outline-offset: -2px;
+  }
+
   .nav-link.active {
     color: var(--text-link);
     background: rgb(38 106 103 / 8%);
@@ -241,11 +246,17 @@ function isActive(href: string) {
     height: 2.2rem;
     border-radius: 0.45rem;
     color: var(--text-secondary);
-    transition: color 200ms ease;
+    transition: color 200ms ease, transform 200ms ease;
   }
 
   .nav-icon-link:hover {
     color: var(--text-link);
+    transform: scale(1.08);
+  }
+
+  .nav-icon-link:focus-visible {
+    outline: 2px solid var(--text-link);
+    outline-offset: 2px;
   }
 
   /* ===== BURGER BUTTON ===== */
@@ -269,6 +280,11 @@ function isActive(href: string) {
   .nav-burger:hover {
     border-color: var(--text-link);
     color: var(--text-link);
+  }
+
+  .nav-burger:focus-visible {
+    outline: 2px solid var(--text-link);
+    outline-offset: 2px;
   }
 
   @media (min-width: 768px) {

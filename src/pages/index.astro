@@ -64,6 +64,15 @@ const updatedDate = now.toLocaleDateString("en-US", {
   year: "numeric",
 });
 
+const heroGlossaryTerms = new Set([
+  "Lambda Calculus",
+  "Curry-Howard Correspondence",
+  "Monad",
+  "Algebraic Effects",
+  "Structured Concurrency",
+  "Effect",
+]);
+
 const readingTimes: Record<string, number> = {
   "1": 3, "2": 5, "3": 6, "4": 4, "5": 4, "6": 5,
   "7": 4, "8": 3, "9": 4, "10": 5, "11": 2, "12": 2,
@@ -133,26 +142,27 @@ const heroYears = [
     <Timeline linkToPages chapterSlugs={chapterSlugs} />
 
     <!-- Glossary -->
-    <section class="glass-card mt-6 rounded-2xl p-6" aria-labelledby="start-here">
+    <section class="glass-card mt-6 rounded-3xl p-6" aria-labelledby="start-here">
       <div class="flex items-center justify-between">
-        <h2 id="start-here" class="text-theme-primary font-display text-2xl">Start Here (No <abbr title="Computer Science">CS</abbr> Degree Required)</h2>
+        <h2 id="start-here" class="text-theme-primary font-display text-2xl">Key Concepts</h2>
         <a href={base("/glossary")} class="text-theme-link text-sm font-semibold">View all &rarr;</a>
       </div>
       <p class="text-theme-secondary mt-2 max-w-3xl">
-        This topic can look intimidating because of the terminology. Treat each chapter as a story about one big idea,
-        not a test. The goal is understanding relationships, not memorizing formal proofs.
+        The six ideas that thread through the entire narrative. If you understand these, everything else follows.
       </p>
       <dl class="mt-4 grid gap-3 md:grid-cols-2">
-        {plainLanguageGlossary.map((entry) => (
-          <GlossaryCard
-            term={entry.term}
-            definition={entry.definition}
-            link={entry.link}
-            chapters={entry.chapters}
-            chapterSlugs={chapterSlugs}
-            linkToChapterPages
-          />
-        ))}
+        {plainLanguageGlossary
+          .filter((entry) => heroGlossaryTerms.has(entry.term))
+          .map((entry) => (
+            <GlossaryCard
+              term={entry.term}
+              definition={entry.definition}
+              link={entry.link}
+              chapters={entry.chapters}
+              chapterSlugs={chapterSlugs}
+              linkToChapterPages
+            />
+          ))}
       </dl>
     </section>
 
@@ -162,17 +172,19 @@ const heroYears = [
         <h2 id="chapter-overview" class="text-theme-primary font-display text-3xl">Chapter Overview</h2>
         <p class="text-theme-secondary text-sm">Updated {updatedDate}</p>
       </div>
-      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {chapterCards.map((chapter) => (
-          <ChapterCard
-            chapterNumber={chapter.chapterNumber}
-            title={chapter.title}
-            slug={chapter.slug}
-            summary={chapter.summary}
-            meta={chapter.meta}
-            readingTime={readingTimes[chapter.chapterNumber]}
-            linkToPage
-          />
+      <div class="bento-grid">
+        {chapterCards.map((chapter, i) => (
+          <div class="card-reveal" style={`transition-delay: ${i * 80}ms;`}>
+            <ChapterCard
+              chapterNumber={chapter.chapterNumber}
+              title={chapter.title}
+              slug={chapter.slug}
+              summary={chapter.summary}
+              meta={chapter.meta}
+              readingTime={readingTimes[chapter.chapterNumber]}
+              linkToPage
+            />
+          </div>
         ))}
       </div>
     </section>
@@ -192,16 +204,18 @@ const heroYears = [
           <EraLegend />
         </div>
         <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {sortedFigures.slice(0, 6).map((figure) => (
-            <FigureCard
-              name={figure.name}
-              image={figure.image}
-              sourcePage={figure.sourcePage}
-              meta={figure.meta}
-              era={figure.era}
-              chapterSlugs={chapterSlugs}
-              linkToChapterPages
-            />
+          {sortedFigures.slice(0, 6).map((figure, i) => (
+            <div class="card-reveal" style={`transition-delay: ${i * 80}ms;`}>
+              <FigureCard
+                name={figure.name}
+                image={figure.image}
+                sourcePage={figure.sourcePage}
+                meta={figure.meta}
+                era={figure.era}
+                chapterSlugs={chapterSlugs}
+                linkToChapterPages
+              />
+            </div>
           ))}
         </ul>
         {sortedFigures.length > 6 && (
@@ -239,9 +253,65 @@ const heroYears = [
         line.style.transform = "scaleX(1)";
       }, i * 120 + 400);
     });
+
+    // ===== STAGGERED CARD REVEAL =====
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll(".card-reveal").forEach((el) => {
+        revealObserver.observe(el);
+      });
+    }
   </script>
 
   <style>
+    .bento-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .bento-grid > :first-child {
+      grid-column: span 2;
+    }
+
+    .bento-grid > :nth-child(4) {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 767px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .bento-grid > * {
+        grid-column: span 1 !important;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 1279px) {
+      .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .bento-grid > :first-child {
+        grid-column: span 2;
+      }
+
+      .bento-grid > :nth-child(4) {
+        grid-column: span 1;
+      }
+    }
+
     .hero-years {
       display: flex;
       flex-wrap: wrap;

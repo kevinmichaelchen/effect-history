@@ -77,11 +77,12 @@ const activeCategories = paperCategories.filter((cat) =>
     </div>
 
     <div id="papers-grid" class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-      {sortedPapers.map((paper) => {
+      {sortedPapers.map((paper, i) => {
         const colors = categoryColors[paper.category];
         return (
+          <div class="card-reveal" style={`transition-delay: ${Math.min(i * 40, 600)}ms;`}>
           <div
-            class="paper-card glass-card flex flex-col rounded-xl p-5"
+            class="paper-card glass-card flex flex-col rounded-2xl p-5"
             data-paper-category={paper.category}
             style={`--cat-bg: ${colors?.bg}; --cat-dark-bg: ${colors?.darkBg}; --cat-text: ${colors?.text}; --cat-dark-text: ${colors?.darkText}; --cat-border: ${colors?.border}; --cat-dark-border: ${colors?.darkBorder};`}
           >
@@ -129,6 +130,7 @@ const activeCategories = paperCategories.filter((cat) =>
               })}
             </div>
           </div>
+          </div>
         );
       })}
     </div>
@@ -147,15 +149,16 @@ const activeCategories = paperCategories.filter((cat) =>
         const category = tab.getAttribute("data-category");
         let delay = 0;
         cards.forEach((card) => {
+          const wrapper = card.closest(".card-reveal") || card;
           const match = category === "all" || card.getAttribute("data-paper-category") === category;
           if (match) {
-            card.style.display = "";
+            wrapper.style.display = "";
             card.style.animation = "none";
             card.offsetHeight; // reflow
-            card.style.animation = `card-reveal 320ms ease ${delay}ms both`;
+            card.style.animation = `paper-filter-in 320ms ease ${delay}ms both`;
             delay += 30;
           } else {
-            card.style.display = "none";
+            wrapper.style.display = "none";
           }
         });
       });
@@ -176,6 +179,24 @@ const activeCategories = paperCategories.filter((cat) =>
     strip?.addEventListener("scroll", updateFades, { passive: true });
     window.addEventListener("resize", updateFades);
     updateFades();
+
+    // ===== STAGGERED CARD REVEAL =====
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll(".card-reveal").forEach((el) => {
+        revealObserver.observe(el);
+      });
+    }
   </script>
 
   <style>
@@ -320,14 +341,13 @@ const activeCategories = paperCategories.filter((cat) =>
     /* ===== PAPER CARDS ===== */
     .paper-card {
       border-color: var(--cat-border);
-      animation: card-reveal 320ms ease both;
     }
 
     :global([data-theme="dark"]) .paper-card {
       border-color: var(--cat-dark-border);
     }
 
-    @keyframes card-reveal {
+    @keyframes paper-filter-in {
       from {
         opacity: 0;
         transform: translateY(8px);

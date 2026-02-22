@@ -42,7 +42,7 @@
   --color-amber-400: #dba450;
   --color-amber-700: #8f5c17;
 
-  --shadow-soft: 0 16px 40px rgb(35 32 28 / 10%);
+  --shadow-soft: 0 20px 40px -15px rgb(35 32 28 / 5%);
 }
 
 /* ===== DARK MODE VARIABLES ===== */
@@ -100,12 +100,12 @@
       radial-gradient(circle at 12% -10%, var(--orb-teal), transparent 32rem),
       radial-gradient(circle at 86% 6%, var(--orb-amber), transparent 28rem),
       linear-gradient(180deg, var(--bg-page) 0%, var(--bg-page-end) 100%);
-    transition: background 300ms ease, color 300ms ease;
+    transition: background 300ms ease, color 160ms ease;
   }
 
   body {
     margin: 0;
-    min-height: 100vh;
+    min-height: 100dvh;
     font-family: var(--font-body);
     line-height: 1.62;
     text-wrap: pretty;
@@ -133,6 +133,20 @@
     text-decoration: none;
     letter-spacing: 0.04em;
   }
+
+  /* ===== FOCUS-VISIBLE RINGS ===== */
+  :focus-visible {
+    outline: 2px solid var(--text-link);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  /* Round elements get round focus rings */
+  [class*="rounded-full"]:focus-visible,
+  button[class*="rounded-full"]:focus-visible,
+  a[class*="rounded-full"]:focus-visible {
+    border-radius: 9999px;
+  }
 }
 
 /* ===== SEMANTIC COLOR UTILITIES ===== */
@@ -151,17 +165,46 @@
 @layer components {
   /* ===== GLASS CARD (shared design primitive — used by 7+ components) ===== */
   .glass-card {
+    position: relative;
     border: 1px solid var(--border-subtle);
     background: var(--bg-card);
     backdrop-filter: blur(4px);
     box-shadow: var(--shadow-soft);
-    transition: background 300ms ease, border-color 300ms ease;
+    transition: background 300ms ease, border-color 300ms ease,
+      box-shadow 400ms ease;
+  }
+
+  .glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    background: radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--text-link) 6%, transparent),
+      transparent 60%
+    );
+    transition: opacity 400ms ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .glass-card:hover::before {
+    opacity: 1;
+  }
+
+  .glass-card:hover {
+    box-shadow: 0 24px 48px -12px rgb(0 0 0 / 8%);
   }
 
   /* ===== PROSE ARTICLE (shared — used by chapter + blog layouts) ===== */
 
-  /* Override prose colors with our CSS custom properties */
+  /* Override prose colors with our CSS custom properties.
+     We set both the Tailwind prose variables AND direct color properties
+     to ensure dark mode works with our [data-theme="dark"] approach. */
   .prose-lineage {
+    color: var(--text-primary);
     --tw-prose-body: var(--text-primary);
     --tw-prose-headings: var(--text-primary);
     --tw-prose-links: var(--text-link);
@@ -177,14 +220,40 @@
     --tw-prose-code: var(--text-primary);
     --tw-prose-pre-code: #f5f5f5;
     --tw-prose-pre-bg: var(--bg-code-block);
-    /* Invert colors for dark mode */
-    --tw-prose-invert-body: var(--text-primary);
-    --tw-prose-invert-headings: var(--text-primary);
-    --tw-prose-invert-links: var(--text-link);
-    --tw-prose-invert-bold: var(--text-primary);
-    --tw-prose-invert-code: var(--text-primary);
-    --tw-prose-invert-pre-code: #f5f5f5;
-    --tw-prose-invert-pre-bg: var(--bg-code-block);
+  }
+
+  .prose-lineage p:not([class~="not-prose"] *),
+  .prose-lineage li:not([class~="not-prose"] *),
+  .prose-lineage td:not([class~="not-prose"] *),
+  .prose-lineage th:not([class~="not-prose"] *),
+  .prose-lineage dt:not([class~="not-prose"] *),
+  .prose-lineage dd:not([class~="not-prose"] *),
+  .prose-lineage figcaption:not([class~="not-prose"] *) {
+    color: var(--text-primary);
+  }
+
+  .prose-lineage strong:not([class~="not-prose"] *) {
+    color: var(--text-primary);
+  }
+
+  /* Force our theme colors over Tailwind prose defaults.
+     We avoid :where() here because it has zero specificity and
+     loses to Tailwind's prose selectors. */
+  .prose-lineage a:not([class~="not-prose"] *) {
+    color: var(--text-link);
+  }
+
+  .prose-lineage h1:not([class~="not-prose"] *),
+  .prose-lineage h2:not([class~="not-prose"] *),
+  .prose-lineage h3:not([class~="not-prose"] *),
+  .prose-lineage h4:not([class~="not-prose"] *),
+  .prose-lineage h5:not([class~="not-prose"] *),
+  .prose-lineage h6:not([class~="not-prose"] *) {
+    color: var(--text-primary);
+  }
+
+  .prose-lineage code:not(pre *):not([class~="not-prose"] *) {
+    color: var(--text-primary);
   }
 
   .prose-lineage :where(h2, h3, h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
@@ -295,6 +364,14 @@
     background: var(--bg-table-header);
   }
 
+  .prose-lineage tr {
+    transition: background 160ms ease;
+  }
+
+  .prose-lineage tbody tr:hover {
+    background: var(--bg-table-header);
+  }
+
   /* Give the first column some breathing room */
   .prose-lineage td:first-child,
   .prose-lineage th:first-child {
@@ -303,13 +380,17 @@
   }
 
   .prose-lineage :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-    transition: color 160ms ease;
+    text-decoration: none;
+    background-image: linear-gradient(var(--text-link), var(--text-link));
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 300ms ease, color 160ms ease;
   }
 
-  .prose-lineage :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)):hover {
-    text-decoration-thickness: 2px;
+  .prose-lineage :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)):hover,
+  .prose-lineage :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)):focus-visible {
+    background-size: 100% 1px;
   }
 
   .prose-lineage :where(hr):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
@@ -359,6 +440,37 @@
   animation: float-orb 12s ease-in-out infinite;
 }
 
+/* ===== GRAIN TEXTURE OVERLAY ===== */
+html::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+[data-theme="dark"] html::after,
+html[data-theme="dark"]::after {
+  mix-blend-mode: soft-light;
+  opacity: 0.04;
+}
+
+/* ===== STAGGERED CARD ENTRANCE ===== */
+.card-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 480ms ease,
+    transform 480ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -369,5 +481,11 @@
     transition: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .card-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

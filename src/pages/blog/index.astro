@@ -22,31 +22,52 @@ const posts = (await getCollection("blog"))
     </p>
 
     <div class="space-y-4">
-      {posts.map((post) => {
+      {posts.map((post, i) => {
         const formattedDate = post.data.date.toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",
         });
         return (
-          <a href={base(`/blog/${post.id}`)} class="blog-card glass-card block rounded-2xl p-6 no-underline">
-            <h2 class="text-theme-primary font-display text-xl leading-snug">{post.data.title}</h2>
-            <p class="text-theme-secondary mt-2 text-sm leading-relaxed">{post.data.description}</p>
-            <div class="text-theme-secondary mt-3 flex flex-wrap items-center gap-3 text-xs">
-              <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
-              {post.data.tags.length > 0 && (
-                <div class="flex flex-wrap gap-1.5">
-                  {post.data.tags.map((tag: string) => (
-                    <span class="blog-tag rounded-full px-2 py-0.5 font-medium">{tag}</span>
-                  ))}
-                </div>
-              )}
-            </div>
-          </a>
+          <div class="card-reveal" style={`transition-delay: ${i * 80}ms;`}>
+            <a href={base(`/blog/${post.id}`)} class="blog-card glass-card block rounded-3xl p-6 no-underline">
+              <h2 class="text-theme-primary font-display text-xl leading-snug">{post.data.title}</h2>
+              <p class="text-theme-secondary mt-2 text-sm leading-relaxed">{post.data.description}</p>
+              <div class="text-theme-secondary mt-3 flex flex-wrap items-center gap-3 text-xs">
+                <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
+                {post.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-1.5">
+                    {post.data.tags.map((tag: string) => (
+                      <span class="blog-tag rounded-full px-2 py-0.5 font-medium">{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </a>
+          </div>
         );
       })}
     </div>
   </main>
+
+  <script is:inline>
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll(".card-reveal").forEach((el) => {
+        revealObserver.observe(el);
+      });
+    }
+  </script>
 
   <style>
     .blog-card {

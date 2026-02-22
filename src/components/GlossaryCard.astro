@@ -12,7 +12,7 @@ import { base } from "../lib/base";
 const { term, definition, link, chapters, chapterSlugs = {}, linkToChapterPages = false } = Astro.props;
 ---
 
-<div class="border-theme-subtle bg-theme-card rounded-xl border p-4">
+<div class="border-theme-subtle bg-theme-card rounded-2xl border p-4">
   <dt class="text-theme-primary font-semibold">
     {link ? (
       <a href={link} target="_blank" rel="noreferrer" class="text-theme-primary no-underline">

@@ -38,7 +38,7 @@ const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
 
     <section class="grid gap-8 lg:grid-cols-[260px_1fr]" aria-label="Blog post">
       <!-- TOC sidebar -->
-      <nav class="blog-toc glass-card h-max rounded-2xl p-5 lg:sticky lg:top-16" aria-label="Table of contents">
+      <nav class="blog-toc glass-card h-max rounded-3xl p-5 lg:sticky lg:top-16" aria-label="Table of contents">
         <h2 class="text-theme-primary mb-3 font-display text-xl">Contents</h2>
         <ul class="m-0 list-none space-y-1 p-0 text-sm">
           {tocHeadings.map((heading) => (
@@ -74,7 +74,7 @@ const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
           </div>
         </header>
 
-        <article class="prose prose-lineage dark:prose-invert max-w-none">
+        <article class="prose prose-lineage max-w-prose">
           <slot />
         </article>
       </div>
@@ -127,6 +127,14 @@ const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
     .toc-link:hover {
       border-left-color: var(--text-link) !important;
       color: var(--text-primary) !important;
+    }
+
+    /* Let code blocks break out wider than the prose column */
+    article :global(pre) {
+      max-width: none;
+      margin-left: -1rem;
+      margin-right: -1rem;
+      width: calc(100% + 2rem);
     }
   </style>
 </BaseLayout>

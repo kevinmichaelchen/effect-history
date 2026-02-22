@@ -145,7 +145,13 @@ const conceptLinks = [
     font-family: var(--font-display);
     font-size: 1rem;
     color: var(--text-link);
-    transition: background 300ms ease, border-color 300ms ease;
+    transition: background 300ms ease, border-color 300ms ease,
+      transform 300ms ease, color 300ms ease;
+  }
+
+  .site-footer:hover .footer-lambda {
+    transform: translate(-50%, -50%) scale(1.1);
+    border-color: var(--text-link);
   }
 
   .footer-brand {
@@ -184,13 +190,15 @@ const conceptLinks = [
     font-weight: 500;
     color: var(--text-link);
     text-decoration: none;
-    transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+    transition: background 160ms ease, border-color 160ms ease,
+      color 160ms ease, transform 200ms ease;
   }
 
   .footer-pill:hover {
     background: var(--text-link);
     border-color: var(--text-link);
     color: var(--bg-page);
+    transform: scale(1.03);
   }
 
   .footer-heading {
@@ -216,11 +224,16 @@ const conceptLinks = [
     font-size: 0.85rem;
     color: var(--text-secondary);
     text-decoration: none;
-    transition: color 160ms ease;
+    background-image: linear-gradient(var(--text-link), var(--text-link));
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: color 160ms ease, background-size 250ms ease;
   }
 
   .footer-list a:hover {
     color: var(--text-primary);
+    background-size: 100% 1px;
   }
 
   .footer-bottom {
