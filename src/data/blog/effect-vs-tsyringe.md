@@ -13,7 +13,7 @@ But tsyringe inherits the limitations of that tradition. Dependencies are discov
 
 Effect takes a fundamentally different approach. Dependencies aren't registered in a container — they're declared in the type signature. The `R` parameter in `Effect<A, E, R>` is a compile-time record of every service a computation requires. If you forget to provide one, your program doesn't compile. No runtime surprises. No missing-binding exceptions in production.
 
-This post compares the two approaches and argues that Effect's type-level dependency injection — born from decades of functional programming research — is a more principled foundation for TypeScript applications.
+This post compares the two approaches and argues that Effect's type-level dependency injection is a better foundation for TypeScript applications.
 
 ## The Container vs. the Type Signature
 
@@ -221,9 +221,9 @@ It's especially well-suited to NestJS applications, where the decorator-based st
 
 tsyringe and Effect both solve dependency injection, but they start from different premises. tsyringe says: *"Tell the container how to build your objects, and it will wire them together at runtime."* Effect says: *"Declare what your program needs in its type signature, and the compiler will ensure everything is provided before it runs."*
 
-The difference is the difference between runtime discovery and compile-time proof. tsyringe's approach works — millions of Java and C# applications prove that. But TypeScript's type system is powerful enough to do better. Effect's `R` parameter makes dependency graphs visible, verifiable, and composable without reflection, without decorators, and without a mutable global container.
+The difference is the difference between runtime discovery and compile-time proof. tsyringe's approach works — millions of Java and C# applications prove that. But TypeScript's type system is powerful enough to do better. Effect's `R` parameter makes dependency graphs visible and verifiable without reflection, decorators, or a mutable global container.
 
-If you're starting a new TypeScript project and want dependency injection that the type system actually enforces, Effect offers something tsyringe's architecture can't: certainty at compile time that your program has everything it needs to run.
+If you're starting a new TypeScript project and want dependency injection the type system actually enforces, Effect does that. tsyringe doesn't.
 
 ---
 

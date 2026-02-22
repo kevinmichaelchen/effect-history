@@ -9,7 +9,7 @@ tags: ["effect", "errore", "type-safety", "functional-programming"]
 
 [errore](https://errore.org/) is a TypeScript library that brings typed errors to your codebase. It's a clean idea: instead of throwing exceptions, return errors as values and let the type system track what can go wrong. If you've been burned by untyped `catch` blocks, errore's pitch is immediately appealing.
 
-But if typed errors were the whole story, we wouldn't need Effect. The intellectual history behind Effect reveals that "errors as values" is one chapter in a much longer arc — one that stretches from the lambda calculus through category theory, algebraic effects, and structured concurrency. errore addresses a real pain point, but it solves only one dimension of a problem that is inherently multi-dimensional.
+But typed errors aren't the whole story. "Errors as values" is one chapter in a longer arc that includes the lambda calculus, category theory, algebraic effects, and structured concurrency. errore addresses a real pain point, but it solves one dimension of a multi-dimensional problem.
 
 This post argues that errore is a useful stepping stone, but that Effect — born from decades of accumulated insight — is the destination.
 
@@ -17,7 +17,7 @@ This post argues that errore is a useful stepping stone, but that Effect — bor
 
 errore models *errors* as values. Effect models *entire programs* as values.[^1]
 
-This distinction is fundamental. When you write an Effect program, the value you're constructing isn't just a result-or-error — it's a *description* of a computation that can be inspected, composed, retried, timed out, traced, and interpreted in multiple ways. This is the programs-as-values paradigm, and it emerges directly from the lambda calculus, where computation itself is just function application.[^2]
+When you write an Effect program, the value you're constructing isn't a result-or-error. It's a *description* of a computation that can be composed, retried, timed out, or traced. This is the programs-as-values paradigm, and it emerges directly from the lambda calculus, where computation itself is just function application.[^2]
 
 The Curry-Howard correspondence deepens this: a type signature is a proposition, and a program that inhabits that type is a proof.[^3] Effect's type signature `Effect<A, E, R>` isn't merely carrying data — it's asserting a proposition about what the program does, what can go wrong, and what it needs. errore gives you `E`. Effect gives you `E`, `A`, and `R` together, as an algebraic structure with laws.
 
@@ -67,7 +67,7 @@ This is the "making illegal states unrepresentable" principle applied to resourc
 
 ## Dependency Injection via the Environment Type
 
-errore's `Result<A, E>` has two channels: success and error. Effect's `Effect<A, E, R>` has three — and that third channel, `R`, changes everything.
+errore's `Result<A, E>` has two channels: success and error. Effect's `Effect<A, E, R>` has three — and the third channel, `R`, is the interesting one.
 
 `R` represents the *requirements* of a computation.[^7] It's a type-level declaration of what services, configurations, or capabilities the program needs to run. This is dependency injection resolved at the type level, not through a runtime container.
 
@@ -82,7 +82,7 @@ const program = createUser.pipe(
 );
 ```
 
-In ZIO (Effect's Scala predecessor), this `R` channel was the breakthrough that unified dependency injection with the effect system.[^7] errore offers nothing comparable — if you need DI, you wire it up separately, losing the type safety and composability.
+In ZIO (Effect's Scala predecessor), the `R` channel unified dependency injection with the effect system.[^7] errore offers nothing comparable. If you need DI, you wire it up separately.
 
 ## Algebraic Effects Heritage
 
@@ -109,15 +109,15 @@ Once you have programs as values with typed errors, structured concurrency, reso
 | Schema validation | Yes (Effect Schema) | No |
 | Platform-agnostic HTTP | Yes (Effect Platform) | No |
 
-Effect's convergence[^9] is the result of decades of ideas coming together: lambda calculus, type theory, category theory, algebraic effects, structured concurrency, and practical lessons from Haskell, Scala, and ZIO. Each capability isn't bolted on — it's a natural consequence of the programs-as-values foundation.
+These capabilities aren't bolted on separately. They follow from the programs-as-values foundation[^9], which draws on lambda calculus, type theory, category theory, algebraic effects, and structured concurrency.
 
 ## Conclusion
 
 errore solves a real problem. Typed errors are better than `unknown` in your `catch` blocks. If all you need is error typing, errore is a fine choice.
 
-But most programs need more than error typing. They need concurrency that doesn't leak. Resources that close themselves. Dependencies that compose. Computations that can be inspected and reinterpreted. These aren't nice-to-haves — they're the problems that cause production incidents at 2 AM.
+But most programs need more than error typing. They need concurrency that doesn't leak, resources that close themselves, and dependencies that compose. Those are the problems that wake you up at 2 AM.
 
-Effect exists because "errors as values" was never the whole answer. The whole answer is *programs* as values — and that requires an intellectual foundation that took sixty years to build.
+Effect exists because "errors as values" was never enough. *Programs* as values gets you the rest.
 
 ---
 
