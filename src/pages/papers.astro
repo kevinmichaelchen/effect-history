@@ -26,6 +26,14 @@ const categoryColors: Record<string, { bg: string; darkBg: string; text: string;
   "Effect":                            { bg: "rgb(38 106 103 / 14%)",  darkBg: "rgb(146 210 206 / 14%)", text: "#266a67", darkText: "#92d2ce", border: "rgb(38 106 103 / 30%)",  darkBorder: "rgb(146 210 206 / 28%)" },
 };
 
+// Slugify title for ConnectedPapers URLs
+function slugifyTitle(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 // Flatten and sort all papers chronologically (ascending by year)
 const sortedPapers = [...papers].sort((a, b) => a.year - b.year);
 
@@ -115,6 +123,17 @@ const activeCategories = paperCategories.filter((cat) =>
                   class="paper-pill"
                 >
                   Source &nearr;
+                </a>
+              )}
+              {paper.semanticScholarId && (
+                <a
+                  href={`https://www.connectedpapers.com/main/${paper.semanticScholarId}/${slugifyTitle(paper.title)}/graph`}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="paper-pill"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><circle cx="5" cy="6" r="1.5"/><circle cx="19" cy="6" r="1.5"/><circle cx="5" cy="18" r="1.5"/><circle cx="19" cy="18" r="1.5"/><line x1="7" y1="7" x2="10" y2="10"/><line x1="14" y1="10" x2="17" y2="7"/><line x1="7" y1="17" x2="10" y2="14"/><line x1="14" y1="14" x2="17" y2="17"/></svg>
+                  Connected Papers
                 </a>
               )}
               {paper.chapters.map((ch) => {
@@ -383,6 +402,7 @@ const activeCategories = paperCategories.filter((cat) =>
     }
 
     .paper-pill {
+      gap: 0.3rem;
       color: var(--text-link);
     }
 

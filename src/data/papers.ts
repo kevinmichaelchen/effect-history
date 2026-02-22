@@ -9,6 +9,7 @@ export type Paper = {
   summary: string;
   chapters: string[];
   category: string;
+  semanticScholarId?: string;
 };
 
 export const papers: Paper[] = [
@@ -24,6 +25,7 @@ export const papers: Paper[] = [
     summary: "Introduced the lambda calculus and proved the undecidability of the Entscheidungsproblem, establishing the foundations of functional programming.",
     chapters: ["1"],
     category: "Lambda Calculus",
+    semanticScholarId: "60400c043b2624f9cfc2d8daa0f45f3c1d524de3",
   },
 
   // Curry-Howard Correspondence
@@ -38,6 +40,7 @@ export const papers: Paper[] = [
     summary: "First observed the correspondence between types of combinators and logical axioms — the seed of the Curry-Howard correspondence.",
     chapters: ["2"],
     category: "Curry-Howard Correspondence",
+    semanticScholarId: "707b4b9bc36ae5f706dd453ff3db3906b79e41ae",
   },
   {
     id: "curry-feys-1958",
@@ -60,6 +63,7 @@ export const papers: Paper[] = [
     summary: "Made the correspondence between proofs and programs explicit: proof normalization is program evaluation. Circulated as xerox copies for 11 years.",
     chapters: ["2"],
     category: "Curry-Howard Correspondence",
+    semanticScholarId: "1c28e7160184454808b5559faaa6570a1dc63f7c",
   },
   {
     id: "wadler-propositions",
@@ -72,6 +76,7 @@ export const papers: Paper[] = [
     summary: "Accessible survey of the Curry-Howard correspondence and its deep implications for programming language design.",
     chapters: ["2"],
     category: "Curry-Howard Correspondence",
+    semanticScholarId: "73d8fadcd56305ddcce6af59beeed98ba48c89cb",
   },
   {
     id: "martin-lof-1984",
@@ -84,6 +89,7 @@ export const papers: Paper[] = [
     summary: "Extended Curry-Howard to full predicate logic with dependent types, spawning modern proof assistants like Coq, Agda, and Lean.",
     chapters: ["2"],
     category: "Curry-Howard Correspondence",
+    semanticScholarId: "dd300f101ae724a42ebf1cae51144eef5fc44e8f",
   },
 
   // Category Theory
@@ -98,6 +104,7 @@ export const papers: Paper[] = [
     summary: "Founded category theory — introducing categories, functors, and natural transformations, the mathematical language of composition.",
     chapters: ["3"],
     category: "Category Theory",
+    semanticScholarId: "fd5732c8d88bbe2d47b1cf92d428b25dbcb9c83a",
   },
   {
     id: "eilenberg-moore-1965",
@@ -110,6 +117,7 @@ export const papers: Paper[] = [
     summary: "Established the connection between monads and adjoint functors; introduced the Eilenberg-Moore category of monad algebras.",
     chapters: ["3"],
     category: "Category Theory",
+    semanticScholarId: "4ee72874ae30f14ac49243cc76a2bfa203755222",
   },
   {
     id: "kleisli-1965",
@@ -122,6 +130,7 @@ export const papers: Paper[] = [
     summary: "Introduced the Kleisli category — the free decomposition of a monad into an adjunction. The basis for monadic composition in programming.",
     chapters: ["3"],
     category: "Category Theory",
+    semanticScholarId: "c977e0e6952f7bca2ff7e0b654302f4bf2e77646",
   },
   {
     id: "maclane-1971",
@@ -146,6 +155,7 @@ export const papers: Paper[] = [
     summary: "The breakthrough paper connecting mathematical monads to computational side effects. Won the LICS Test-of-Time Award in 2009.",
     chapters: ["3", "5"],
     category: "Monads & Computational Effects",
+    semanticScholarId: "f67dec0099505e23e9441a9a567fea1d97ff69f6",
   },
   {
     id: "moggi-1991",
@@ -158,6 +168,7 @@ export const papers: Paper[] = [
     summary: "Expanded journal paper demonstrating that partiality, non-determinism, state, exceptions, continuations, and I/O all fit a uniform monadic framework.",
     chapters: ["3", "5"],
     category: "Monads & Computational Effects",
+    semanticScholarId: "7f2210ff39ef9669f2a84db611c80c4b28f9fffc",
   },
 
   // Functional Programming Languages
@@ -172,6 +183,7 @@ export const papers: Paper[] = [
     summary: "Introduced Lisp — the first functional programming language, bringing lambda calculus from theory into practical programming.",
     chapters: ["4"],
     category: "Functional Programming Languages",
+    semanticScholarId: "b443e18512181514b19363cd54dd3309c70be20e",
   },
   {
     id: "milner-1978",
@@ -184,6 +196,7 @@ export const papers: Paper[] = [
     summary: "Introduced Algorithm W for type inference in ML, enabling types to be inferred rather than declared — the basis of all modern typed FP.",
     chapters: ["4"],
     category: "Functional Programming Languages",
+    semanticScholarId: "76b842cb3813741463f70556f5d904259b7bc829",
   },
   {
     id: "damas-milner-1982",
@@ -196,6 +209,7 @@ export const papers: Paper[] = [
     summary: "Proved the soundness and completeness of ML type inference (Hindley-Milner), ensuring every expression gets a most general type.",
     chapters: ["4"],
     category: "Functional Programming Languages",
+    semanticScholarId: "9c97b176ad594a24b923129218c5880a580fcb8b",
   },
   {
     id: "strachey-1967",
@@ -222,6 +236,7 @@ export const papers: Paper[] = [
     summary: "Comprehensive history of Haskell's design, from the committee's formation in 1987 through type classes, monadic I/O, and beyond.",
     chapters: ["5"],
     category: "Haskell & Monadic Programming",
+    semanticScholarId: "a30fd0736b3763a049e71702e52c500cd96f000d",
   },
   {
     id: "wadler-comprehending",
@@ -234,6 +249,7 @@ export const papers: Paper[] = [
     summary: "Translated Moggi's categorical monads into practical Haskell programming, showing how list comprehension syntax generalizes to all monads.",
     chapters: ["5"],
     category: "Haskell & Monadic Programming",
+    semanticScholarId: "27113a576148895f1a127f35b5129198b06bf632",
   },
   {
     id: "wadler-essence",
@@ -246,6 +262,7 @@ export const papers: Paper[] = [
     summary: "Landmark paper showing how monads provide a modular way to add effects (state, exceptions, I/O) to pure functional programs.",
     chapters: ["5"],
     category: "Haskell & Monadic Programming",
+    semanticScholarId: "a1cee17fc0fbe24b2da553fd72b44cd62fbacf61",
   },
   {
     id: "wadler-imperative",
@@ -258,6 +275,7 @@ export const papers: Paper[] = [
     summary: "Proposed monadic I/O for Haskell, solving the problem of side effects in a lazy pure language. Won the POPL Most Influential Paper Award.",
     chapters: ["5"],
     category: "Haskell & Monadic Programming",
+    semanticScholarId: "4bc5332578e0da3556ed576a6d4d33cf9f789e02",
   },
 
   // Effect Systems & Algebraic Effects
@@ -272,6 +290,7 @@ export const papers: Paper[] = [
     summary: "Introduced effect systems at MIT — annotating function types with the side effects they may perform.",
     chapters: ["6"],
     category: "Effect Systems & Algebraic Effects",
+    semanticScholarId: "f90d87769f095f655480916e311c29ff993b1f71",
   },
   {
     id: "lucassen-gifford-1988",
@@ -284,6 +303,7 @@ export const papers: Paper[] = [
     summary: "Extended effect systems with polymorphism, allowing generic functions to abstract over their effects.",
     chapters: ["6"],
     category: "Effect Systems & Algebraic Effects",
+    semanticScholarId: "39fd614e47450e49bdfa94175489b3115a2f3ecd",
   },
   {
     id: "plotkin-power-2003",
@@ -296,6 +316,7 @@ export const papers: Paper[] = [
     summary: "Reframed computational effects as algebraic operations with equational theories, providing the foundation for algebraic effects.",
     chapters: ["6"],
     category: "Effect Systems & Algebraic Effects",
+    semanticScholarId: "6d05037f4d995958823071bf605668e5c7bad197",
   },
   {
     id: "plotkin-pretnar-2009",
@@ -308,6 +329,7 @@ export const papers: Paper[] = [
     summary: "Introduced effect handlers — allowing effects to be interpreted by user-defined handlers, like try/catch generalized to all effects.",
     chapters: ["6"],
     category: "Effect Systems & Algebraic Effects",
+    semanticScholarId: "3a44de84808f0c9742839bd5450dd6679fb0f326",
   },
   {
     id: "plotkin-pretnar-2013",
@@ -320,6 +342,7 @@ export const papers: Paper[] = [
     summary: "Full formal development of algebraic effect handlers with denotational semantics.",
     chapters: ["6"],
     category: "Effect Systems & Algebraic Effects",
+    semanticScholarId: "3470bd27e22abede51f85d92591ce767041c74c7",
   },
 
   // Type-Driven Design
@@ -345,6 +368,7 @@ export const papers: Paper[] = [
     summary: "Introduced exhaustive pattern matching on algebraic data types, ensuring all cases are handled at compile time.",
     chapters: ["7"],
     category: "Type-Driven Design",
+    semanticScholarId: "b93656ec69ec2ad9cd1de531596d5aa04a9796db",
   },
 
   // Concurrency
@@ -359,6 +383,7 @@ export const papers: Paper[] = [
     summary: "History of Erlang's design — lightweight processes, message passing, and the 'let it crash' philosophy that inspired modern concurrency models.",
     chapters: ["8"],
     category: "Concurrency & Fibers",
+    semanticScholarId: "20588077be87593e4a6e0efe2229bda8488f05eb",
   },
   {
     id: "smith-trio-2017",
