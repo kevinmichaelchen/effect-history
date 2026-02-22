@@ -80,8 +80,6 @@ const activeCategories = paperCategories.filter((cat) =>
           );
         })}
       </nav>
-      <div class="filter-fade-l" aria-hidden="true"></div>
-      <div class="filter-fade-r" aria-hidden="true"></div>
     </div>
 
     <div id="papers-grid" class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -183,22 +181,6 @@ const activeCategories = paperCategories.filter((cat) =>
       });
     });
 
-    // ===== HORIZONTAL SCROLL FADE =====
-    const strip = document.querySelector(".filter-strip");
-    const fadeL = document.querySelector(".filter-fade-l");
-    const fadeR = document.querySelector(".filter-fade-r");
-
-    function updateFades() {
-      if (!strip || !fadeL || !fadeR) return;
-      const { scrollLeft, scrollWidth, clientWidth } = strip;
-      fadeL.style.opacity = scrollLeft > 4 ? "1" : "0";
-      fadeR.style.opacity = scrollLeft + clientWidth < scrollWidth - 4 ? "1" : "0";
-    }
-
-    strip?.addEventListener("scroll", updateFades, { passive: true });
-    window.addEventListener("resize", updateFades);
-    updateFades();
-
     // ===== STAGGERED CARD REVEAL =====
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       const revealObserver = new IntersectionObserver(
@@ -227,39 +209,9 @@ const activeCategories = paperCategories.filter((cat) =>
 
     .filter-strip {
       display: flex;
+      flex-wrap: wrap;
       gap: 0.25rem;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
       padding: 0.25rem 0 0.5rem;
-      scroll-snap-type: x proximity;
-    }
-
-    .filter-strip::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* Gradient fade edges for scroll affordance */
-    .filter-fade-l,
-    .filter-fade-r {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 2.5rem;
-      pointer-events: none;
-      z-index: 2;
-      opacity: 0;
-      transition: opacity 200ms ease;
-    }
-
-    .filter-fade-l {
-      left: 0;
-      background: linear-gradient(90deg, var(--bg-page), transparent);
-    }
-
-    .filter-fade-r {
-      right: 0;
-      background: linear-gradient(270deg, var(--bg-page), transparent);
     }
 
     /* ===== FILTER TAB ===== */
@@ -278,7 +230,6 @@ const activeCategories = paperCategories.filter((cat) =>
       color: var(--text-secondary);
       cursor: pointer;
       white-space: nowrap;
-      scroll-snap-align: start;
       transition: color 200ms ease, background 200ms ease;
     }
 
@@ -360,10 +311,29 @@ const activeCategories = paperCategories.filter((cat) =>
     /* ===== PAPER CARDS ===== */
     .paper-card {
       border-color: var(--cat-border);
+      background: var(--cat-bg);
     }
 
     :global([data-theme="dark"]) .paper-card {
       border-color: var(--cat-dark-border);
+      background: var(--cat-dark-bg);
+    }
+
+    /* Category-colored hover glow (overrides glass-card default) */
+    .paper-card::before {
+      background: radial-gradient(
+        circle at 50% 0%,
+        color-mix(in srgb, var(--cat-text) 8%, transparent),
+        transparent 60%
+      );
+    }
+
+    :global([data-theme="dark"]) .paper-card::before {
+      background: radial-gradient(
+        circle at 50% 0%,
+        color-mix(in srgb, var(--cat-dark-text) 8%, transparent),
+        transparent 60%
+      );
     }
 
     @keyframes paper-filter-in {
