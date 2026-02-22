@@ -11,10 +11,28 @@ for (const ch of allChapters) {
   chapterSlugs[ch.chapterNumber] = ch.slug;
 }
 
-const papersByCategory = paperCategories.map((category) => ({
-  category,
-  papers: papers.filter((p) => p.category === category),
-})).filter((group) => group.papers.length > 0);
+// Category color map — warm/cool tones that work in both light and dark modes
+const categoryColors: Record<string, { bg: string; darkBg: string; text: string; darkText: string; border: string; darkBorder: string }> = {
+  "Lambda Calculus":                   { bg: "rgb(38 106 103 / 10%)",  darkBg: "rgb(146 210 206 / 10%)", text: "#266a67", darkText: "#92d2ce", border: "rgb(38 106 103 / 22%)",  darkBorder: "rgb(146 210 206 / 20%)" },
+  "Curry-Howard Correspondence":       { bg: "rgb(219 164 80 / 12%)",  darkBg: "rgb(242 208 157 / 10%)", text: "#8f5c17", darkText: "#f2d09d", border: "rgb(219 164 80 / 25%)",  darkBorder: "rgb(242 208 157 / 20%)" },
+  "Category Theory":                   { bg: "rgb(120 80 180 / 10%)",  darkBg: "rgb(180 150 230 / 10%)", text: "#6b40b0", darkText: "#c4a8e8", border: "rgb(120 80 180 / 22%)",  darkBorder: "rgb(180 150 230 / 20%)" },
+  "Monads & Computational Effects":    { bg: "rgb(180 60 90 / 10%)",   darkBg: "rgb(230 130 150 / 10%)", text: "#a03050", darkText: "#e89aaa", border: "rgb(180 60 90 / 22%)",   darkBorder: "rgb(230 130 150 / 20%)" },
+  "Functional Programming Languages":  { bg: "rgb(50 130 80 / 10%)",   darkBg: "rgb(120 210 150 / 10%)", text: "#2a7a48", darkText: "#8ed4a4", border: "rgb(50 130 80 / 22%)",   darkBorder: "rgb(120 210 150 / 20%)" },
+  "Haskell & Monadic Programming":     { bg: "rgb(90 90 170 / 10%)",   darkBg: "rgb(160 160 230 / 10%)", text: "#4a4aaa", darkText: "#b0b0e6", border: "rgb(90 90 170 / 22%)",   darkBorder: "rgb(160 160 230 / 20%)" },
+  "Effect Systems & Algebraic Effects":{ bg: "rgb(200 100 40 / 10%)",  darkBg: "rgb(240 160 100 / 10%)", text: "#b05a1a", darkText: "#f0a868", border: "rgb(200 100 40 / 22%)",  darkBorder: "rgb(240 160 100 / 20%)" },
+  "Type-Driven Design":                { bg: "rgb(60 140 160 / 10%)",  darkBg: "rgb(120 200 220 / 10%)", text: "#2a7888", darkText: "#88d0e0", border: "rgb(60 140 160 / 22%)",  darkBorder: "rgb(120 200 220 / 20%)" },
+  "Concurrency & Fibers":              { bg: "rgb(160 80 160 / 10%)",  darkBg: "rgb(210 150 210 / 10%)", text: "#904090", darkText: "#d0a0d0", border: "rgb(160 80 160 / 22%)",  darkBorder: "rgb(210 150 210 / 20%)" },
+  "Scala & ZIO":                       { bg: "rgb(200 50 50 / 10%)",   darkBg: "rgb(240 120 120 / 10%)", text: "#b03030", darkText: "#e89090", border: "rgb(200 50 50 / 22%)",   darkBorder: "rgb(240 120 120 / 20%)" },
+  "Effect":                            { bg: "rgb(38 106 103 / 14%)",  darkBg: "rgb(146 210 206 / 14%)", text: "#266a67", darkText: "#92d2ce", border: "rgb(38 106 103 / 30%)",  darkBorder: "rgb(146 210 206 / 28%)" },
+};
+
+// Flatten and sort all papers chronologically (ascending by year)
+const sortedPapers = [...papers].sort((a, b) => a.year - b.year);
+
+// Categories that actually have papers (for the filter bar)
+const activeCategories = paperCategories.filter((cat) =>
+  papers.some((p) => p.category === cat)
+);
 ---
 
 <BaseLayout title="Seminal Papers — Effect Lineage">
@@ -27,86 +45,318 @@ const papersByCategory = paperCategories.map((category) => ({
     <h1 class="text-theme-primary font-display text-4xl">Seminal Papers</h1>
     <p class="text-theme-secondary mt-3 max-w-3xl text-lg">
       The foundational papers, books, and talks that shaped the ideas behind <a href="https://effect.website" target="_blank" rel="noreferrer">Effect</a>.
-      Grouped by topic, spanning from 1934 to the present.
+      Sorted chronologically, spanning from 1934 to the present.
     </p>
 
-    <nav class="mt-6 flex flex-wrap gap-2" aria-label="Jump to category">
-      {papersByCategory.map((group) => (
-        <a
-          href={`#${group.category.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "and")}`}
-          class="border-theme-medium text-theme-link bg-theme-card rounded-full border px-3 py-1 text-xs font-semibold no-underline"
-        >
-          {group.category} ({group.papers.length})
-        </a>
-      ))}
-    </nav>
+    <!-- Category filter bar -->
+    <div class="filter-strip-wrapper">
+      <nav class="filter-strip" aria-label="Filter by category">
+        <button class="filter-tab is-active" data-category="all">
+          <span class="filter-dot" style="--dot-color: var(--text-link);" aria-hidden="true"></span>
+          <span class="filter-label">All</span>
+          <sup class="filter-sup">{sortedPapers.length}</sup>
+        </button>
+        {activeCategories.map((cat) => {
+          const count = papers.filter((p) => p.category === cat).length;
+          const colors = categoryColors[cat];
+          return (
+            <button
+              class="filter-tab"
+              data-category={cat}
+              style={`--dot-color: ${colors?.text}; --dot-dark-color: ${colors?.darkText}; --pill-bg: ${colors?.bg}; --pill-dark-bg: ${colors?.darkBg}; --pill-text: ${colors?.text}; --pill-dark-text: ${colors?.darkText}; --pill-border: ${colors?.border}; --pill-dark-border: ${colors?.darkBorder};`}
+            >
+              <span class="filter-dot" aria-hidden="true"></span>
+              <span class="filter-label">{cat}</span>
+              <sup class="filter-sup">{count}</sup>
+            </button>
+          );
+        })}
+      </nav>
+      <div class="filter-fade-l" aria-hidden="true"></div>
+      <div class="filter-fade-r" aria-hidden="true"></div>
+    </div>
 
-    {papersByCategory.map((group) => (
-      <section class="mt-8" id={group.category.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "and")}>
-        <h2 class="text-theme-primary font-display text-2xl">{group.category}</h2>
-        <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {group.papers.map((paper) => (
-            <div class="glass-card flex flex-col rounded-xl p-5">
-              <h3 class="text-theme-primary font-display text-base leading-snug">
-                {paper.title}
-              </h3>
-              <p class="text-theme-secondary mt-1 text-sm">
-                {paper.authors.join(", ")} ({paper.year})
-              </p>
-              <p class="text-theme-secondary text-xs">{paper.venue}</p>
-              <p class="text-theme-secondary mt-2 flex-1 text-sm">{paper.summary}</p>
-              <div class="mt-3 flex flex-wrap items-center gap-1.5">
-                {paper.localPdf && (
+    <div id="papers-grid" class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      {sortedPapers.map((paper) => {
+        const colors = categoryColors[paper.category];
+        return (
+          <div
+            class="paper-card glass-card flex flex-col rounded-xl p-5"
+            data-paper-category={paper.category}
+            style={`--cat-bg: ${colors?.bg}; --cat-dark-bg: ${colors?.darkBg}; --cat-text: ${colors?.text}; --cat-dark-text: ${colors?.darkText}; --cat-border: ${colors?.border}; --cat-dark-border: ${colors?.darkBorder};`}
+          >
+            <h3 class="text-theme-primary font-display text-base leading-snug">
+              {paper.title}
+            </h3>
+            <p class="text-theme-secondary mt-1 text-sm">
+              {paper.authors.join(", ")} &middot; {paper.year}
+            </p>
+            <p class="text-theme-secondary text-xs">{paper.venue}</p>
+            <p class="text-theme-secondary mt-2 flex-1 text-sm">{paper.summary}</p>
+            <div class="mt-3 flex flex-wrap items-center gap-1.5">
+              <span class="category-badge">{paper.category}</span>
+              {paper.localPdf && (
+                <a
+                  href={base(paper.localPdf)}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="paper-pdf-link"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  PDF
+                </a>
+              )}
+              {paper.url && (
+                <a
+                  href={paper.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="border-theme-subtle text-theme-link rounded-full border px-2 py-0.5 text-xs no-underline"
+                >
+                  Source &nearr;
+                </a>
+              )}
+              {paper.chapters.map((ch) => {
+                const slug = chapterSlugs[ch];
+                return (
                   <a
-                    href={base(paper.localPdf)}
-                    target="_blank"
-                    rel="noreferrer"
-                    class="paper-pdf-link"
-                  >
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    PDF
-                  </a>
-                )}
-                {paper.url && !paper.localPdf && (
-                  <a
-                    href={paper.url}
-                    target="_blank"
-                    rel="noreferrer"
+                    href={slug ? base(`/chapters/${slug}`) : "#"}
                     class="border-theme-subtle text-theme-link rounded-full border px-2 py-0.5 text-xs no-underline"
                   >
-                    Source &nearr;
+                    Ch. {ch}
                   </a>
-                )}
-                {paper.url && paper.localPdf && (
-                  <a
-                    href={paper.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    class="border-theme-subtle text-theme-link rounded-full border px-2 py-0.5 text-xs no-underline"
-                  >
-                    Source &nearr;
-                  </a>
-                )}
-                {paper.chapters.map((ch) => {
-                  const slug = chapterSlugs[ch];
-                  return (
-                    <a
-                      href={slug ? base(`/chapters/${slug}`) : "#"}
-                      class="border-theme-subtle text-theme-link rounded-full border px-2 py-0.5 text-xs no-underline"
-                    >
-                      Ch. {ch}
-                    </a>
-                  );
-                })}
-              </div>
+                );
+              })}
             </div>
-          ))}
-        </div>
-      </section>
-    ))}
+          </div>
+        );
+      })}
+    </div>
   </main>
 
+  <script is:inline>
+    // ===== FILTER INTERACTION =====
+    const tabs = document.querySelectorAll(".filter-tab");
+    const cards = document.querySelectorAll(".paper-card");
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((t) => t.classList.remove("is-active"));
+        tab.classList.add("is-active");
+
+        const category = tab.getAttribute("data-category");
+        let delay = 0;
+        cards.forEach((card) => {
+          const match = category === "all" || card.getAttribute("data-paper-category") === category;
+          if (match) {
+            card.style.display = "";
+            card.style.animation = "none";
+            card.offsetHeight; // reflow
+            card.style.animation = `card-reveal 320ms ease ${delay}ms both`;
+            delay += 30;
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+
+    // ===== HORIZONTAL SCROLL FADE =====
+    const strip = document.querySelector(".filter-strip");
+    const fadeL = document.querySelector(".filter-fade-l");
+    const fadeR = document.querySelector(".filter-fade-r");
+
+    function updateFades() {
+      if (!strip || !fadeL || !fadeR) return;
+      const { scrollLeft, scrollWidth, clientWidth } = strip;
+      fadeL.style.opacity = scrollLeft > 4 ? "1" : "0";
+      fadeR.style.opacity = scrollLeft + clientWidth < scrollWidth - 4 ? "1" : "0";
+    }
+
+    strip?.addEventListener("scroll", updateFades, { passive: true });
+    window.addEventListener("resize", updateFades);
+    updateFades();
+  </script>
+
   <style>
+    /* ===== FILTER STRIP (horizontally scrollable on mobile) ===== */
+    .filter-strip-wrapper {
+      position: relative;
+      margin-top: 1.75rem;
+    }
+
+    .filter-strip {
+      display: flex;
+      gap: 0.25rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 0.25rem 0 0.5rem;
+      scroll-snap-type: x proximity;
+    }
+
+    .filter-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Gradient fade edges for scroll affordance */
+    .filter-fade-l,
+    .filter-fade-r {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2.5rem;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+
+    .filter-fade-l {
+      left: 0;
+      background: linear-gradient(90deg, var(--bg-page), transparent);
+    }
+
+    .filter-fade-r {
+      right: 0;
+      background: linear-gradient(270deg, var(--bg-page), transparent);
+    }
+
+    /* ===== FILTER TAB ===== */
+    .filter-tab {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.75rem;
+      border: none;
+      border-radius: 0.5rem;
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+      scroll-snap-align: start;
+      transition: color 200ms ease, background 200ms ease;
+    }
+
+    .filter-tab::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      border-radius: 1px;
+      background: var(--dot-color, var(--text-link));
+      transform: translateX(-50%);
+      transition: width 280ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    :global([data-theme="dark"]) .filter-tab::after {
+      background: var(--dot-dark-color, var(--text-link));
+    }
+
+    .filter-tab:hover {
+      color: var(--text-primary);
+      background: var(--border-subtle);
+    }
+
+    .filter-tab.is-active {
+      color: var(--pill-text, var(--text-link));
+      font-weight: 600;
+    }
+
+    :global([data-theme="dark"]) .filter-tab.is-active {
+      color: var(--pill-dark-text, var(--text-link));
+    }
+
+    .filter-tab.is-active::after {
+      width: calc(100% - 1rem);
+    }
+
+    .filter-tab.is-active .filter-dot {
+      transform: scale(1.35);
+      box-shadow: 0 0 6px var(--dot-color, var(--text-link));
+    }
+
+    :global([data-theme="dark"]) .filter-tab.is-active .filter-dot {
+      box-shadow: 0 0 6px var(--dot-dark-color, var(--text-link));
+    }
+
+    /* Colored dot — like a library spine label */
+    .filter-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--dot-color, var(--text-link));
+      flex-shrink: 0;
+      transition: transform 250ms ease, box-shadow 250ms ease;
+    }
+
+    :global([data-theme="dark"]) .filter-dot {
+      background: var(--dot-dark-color, var(--text-link));
+    }
+
+    .filter-label {
+      letter-spacing: 0.01em;
+    }
+
+    /* Superscript count — citation-journal style */
+    .filter-sup {
+      font-size: 0.58rem;
+      font-weight: 600;
+      opacity: 0.5;
+      margin-left: -0.15rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .filter-tab.is-active .filter-sup {
+      opacity: 0.8;
+    }
+
+    /* ===== PAPER CARDS ===== */
+    .paper-card {
+      border-color: var(--cat-border);
+      animation: card-reveal 320ms ease both;
+    }
+
+    :global([data-theme="dark"]) .paper-card {
+      border-color: var(--cat-dark-border);
+    }
+
+    @keyframes card-reveal {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== CATEGORY BADGE (subtle, in footer of card) ===== */
+    .category-badge {
+      display: inline-block;
+      padding: 0.08rem 0.45rem;
+      border-radius: 9999px;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      background: var(--cat-bg);
+      color: var(--cat-text);
+    }
+
+    :global([data-theme="dark"]) .category-badge {
+      background: var(--cat-dark-bg);
+      color: var(--cat-dark-text);
+    }
+
+    /* ===== PDF LINK ===== */
     .paper-pdf-link {
       display: inline-flex;
       align-items: center;
