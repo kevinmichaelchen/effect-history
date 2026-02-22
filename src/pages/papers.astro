@@ -92,9 +92,57 @@ const activeCategories = paperCategories.filter((cat) =>
             data-paper-category={paper.category}
             style={`--cat-bg: ${colors?.bg}; --cat-dark-bg: ${colors?.darkBg}; --cat-text: ${colors?.text}; --cat-dark-text: ${colors?.darkText}; --cat-border: ${colors?.border}; --cat-dark-border: ${colors?.darkBorder};`}
           >
+            <div class="flex items-start justify-between gap-2">
             <h3 class="text-theme-primary font-display text-base leading-snug">
               {paper.title}
             </h3>
+            <span class="paper-type-icon flex-shrink-0 mt-0.5" aria-hidden="true">
+              {/* Lambda Calculus: Lucide function-square — λ symbol */}
+              {paper.category === "Lambda Calculus" && (
+                <svg class="icon-lambda" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path class="lambda-f" d="m9 17 3-8 3 8"/><path class="lambda-f2" d="M9.5 14h5"/></svg>
+              )}
+              {/* Curry-Howard: Lucide arrow-right-left — correspondence */}
+              {paper.category === "Curry-Howard Correspondence" && (
+                <svg class="icon-correspond" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="arrow-r" d="m16 3 4 4-4 4"/><path class="arrow-r-line" d="M20 7H4"/><path class="arrow-l" d="m8 21-4-4 4-4"/><path class="arrow-l-line" d="M4 17h16"/></svg>
+              )}
+              {/* Category Theory: Lucide git-merge — morphisms */}
+              {paper.category === "Category Theory" && (
+                <svg class="icon-morphism" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle class="morph-dot-1" cx="18" cy="18" r="3"/><circle class="morph-dot-2" cx="6" cy="6" r="3"/><path class="morph-path" d="M6 21V9a9 9 0 0 0 9 9"/></svg>
+              )}
+              {/* Monads: Lucide package — wrapping values */}
+              {paper.category === "Monads & Computational Effects" && (
+                <svg class="icon-monad" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path class="monad-box" d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path class="monad-inner" d="m3.3 7 8.7 5 8.7-5"/><path class="monad-inner" d="M12 22V12"/></svg>
+              )}
+              {/* FP Languages: Lucide code — </> */}
+              {paper.category === "Functional Programming Languages" && (
+                <svg class="icon-code" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline class="code-left" points="16 18 22 12 16 6"/><polyline class="code-right" points="8 6 2 12 8 18"/></svg>
+              )}
+              {/* Haskell: Lucide layers — monadic layers */}
+              {paper.category === "Haskell & Monadic Programming" && (
+                <svg class="icon-layers" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="layer-1" d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.84Z"/><path class="layer-2" d="m22 12-8.58 4.08a2 2 0 0 1-1.66 0L2 12"/><path class="layer-3" d="m22 17-8.58 4.08a2 2 0 0 1-1.66 0L2 17"/></svg>
+              )}
+              {/* Effect Systems: Lucide sparkles */}
+              {paper.category === "Effect Systems & Algebraic Effects" && (
+                <svg class="icon-sparkles" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="spark-1" d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path class="spark-2" d="M20 3v4"/><path class="spark-3" d="M22 5h-4"/></svg>
+              )}
+              {/* Type-Driven: Lucide shield-check */}
+              {paper.category === "Type-Driven Design" && (
+                <svg class="icon-shield" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path class="shield-check" d="m9 12 2 2 4-4"/></svg>
+              )}
+              {/* Concurrency: Lucide cable — fibers */}
+              {paper.category === "Concurrency & Fibers" && (
+                <svg class="icon-fibers" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="fiber-1" d="M17 21v-2a1 1 0 0 1-1-1v-1a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1"/><path class="fiber-2" d="M19 15V6.5a1 1 0 0 0-7 0v11a1 1 0 0 1-7 0V9"/><path class="fiber-3" d="M21 21v-2h-4"/><path class="fiber-4" d="M3 5v-2h4"/><path class="fiber-5" d="M7 5a1 1 0 0 1-1 1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1"/></svg>
+              )}
+              {/* Scala & ZIO: Lucide flame */}
+              {paper.category === "Scala & ZIO" && (
+                <svg class="icon-flame" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="flame-outer" d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+              )}
+              {/* Effect: Lucide zap */}
+              {paper.category === "Effect" && (
+                <svg class="icon-zap" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="zap-bolt" d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+              )}
+            </span>
+            </div>
             <p class="text-theme-secondary mt-1 text-sm">
               {paper.authors.join(", ")} &middot; {paper.year}
             </p>
@@ -334,6 +382,199 @@ const activeCategories = paperCategories.filter((cat) =>
         color-mix(in srgb, var(--cat-dark-text) 8%, transparent),
         transparent 60%
       );
+    }
+
+    /* ===== PAPER CATEGORY ICONS ===== */
+    .paper-type-icon {
+      color: var(--cat-text);
+      opacity: 0.5;
+      transition: opacity 200ms ease;
+    }
+
+    :global([data-theme="dark"]) .paper-type-icon {
+      color: var(--cat-dark-text);
+    }
+
+    .paper-card:hover .paper-type-icon {
+      opacity: 1;
+    }
+
+    /* Lambda: letter strokes draw in */
+    .icon-lambda .lambda-f,
+    .icon-lambda .lambda-f2 {
+      stroke-dasharray: 12;
+      stroke-dashoffset: 12;
+      transition: stroke-dashoffset 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .icon-lambda .lambda-f2 {
+      transition-delay: 120ms;
+    }
+
+    .paper-card:hover .icon-lambda .lambda-f,
+    .paper-card:hover .icon-lambda .lambda-f2 {
+      stroke-dashoffset: 0;
+    }
+
+    /* Curry-Howard: arrows slide in from edges */
+    .icon-correspond .arrow-r,
+    .icon-correspond .arrow-r-line {
+      transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .icon-correspond .arrow-l,
+    .icon-correspond .arrow-l-line {
+      transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1) 80ms;
+    }
+
+    .paper-card:hover .icon-correspond .arrow-r,
+    .paper-card:hover .icon-correspond .arrow-r-line {
+      transform: translateX(2px);
+    }
+
+    .paper-card:hover .icon-correspond .arrow-l,
+    .paper-card:hover .icon-correspond .arrow-l-line {
+      transform: translateX(-2px);
+    }
+
+    /* Category Theory: path draws in */
+    .icon-morphism .morph-path {
+      stroke-dasharray: 30;
+      stroke-dashoffset: 30;
+      transition: stroke-dashoffset 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .paper-card:hover .icon-morphism .morph-path {
+      stroke-dashoffset: 0;
+    }
+
+    /* Monads: inner lines draw in */
+    .icon-monad .monad-inner {
+      stroke-dasharray: 16;
+      stroke-dashoffset: 16;
+      transition: stroke-dashoffset 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .paper-card:hover .icon-monad .monad-inner {
+      stroke-dashoffset: 0;
+    }
+
+    /* FP Languages: brackets tilt inward */
+    .icon-code .code-left {
+      transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform-origin: right center;
+    }
+
+    .icon-code .code-right {
+      transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform-origin: left center;
+    }
+
+    .paper-card:hover .icon-code .code-left {
+      transform: translateX(1.5px);
+    }
+
+    .paper-card:hover .icon-code .code-right {
+      transform: translateX(-1.5px);
+    }
+
+    /* Haskell: layers fan apart */
+    .icon-layers .layer-2 {
+      transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .icon-layers .layer-3 {
+      transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1) 60ms;
+    }
+
+    .paper-card:hover .icon-layers .layer-2 {
+      transform: translateY(1px);
+    }
+
+    .paper-card:hover .icon-layers .layer-3 {
+      transform: translateY(2px);
+    }
+
+    /* Effect Systems: sparkle pulses */
+    .icon-sparkles .spark-1 {
+      transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform-origin: center;
+    }
+
+    .icon-sparkles .spark-2,
+    .icon-sparkles .spark-3 {
+      stroke-dasharray: 4;
+      stroke-dashoffset: 4;
+      transition: stroke-dashoffset 300ms cubic-bezier(0.22, 1, 0.36, 1) 150ms;
+    }
+
+    .paper-card:hover .icon-sparkles .spark-1 {
+      transform: scale(1.08);
+    }
+
+    .paper-card:hover .icon-sparkles .spark-2,
+    .paper-card:hover .icon-sparkles .spark-3 {
+      stroke-dashoffset: 0;
+    }
+
+    /* Type-Driven: checkmark draws in */
+    .icon-shield .shield-check {
+      stroke-dasharray: 10;
+      stroke-dashoffset: 10;
+      transition: stroke-dashoffset 400ms cubic-bezier(0.22, 1, 0.36, 1) 100ms;
+    }
+
+    .paper-card:hover .icon-shield .shield-check {
+      stroke-dashoffset: 0;
+    }
+
+    /* Concurrency: fibers pulse */
+    .icon-fibers .fiber-2 {
+      stroke-dasharray: 40;
+      stroke-dashoffset: 40;
+      transition: stroke-dashoffset 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .paper-card:hover .icon-fibers .fiber-2 {
+      stroke-dashoffset: 0;
+    }
+
+    /* Scala & ZIO: flame flickers */
+    .icon-flame .flame-outer {
+      transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform-origin: center bottom;
+    }
+
+    .paper-card:hover .icon-flame .flame-outer {
+      animation: flame-flicker 600ms ease-in-out;
+    }
+
+    @keyframes flame-flicker {
+      0% { transform: scaleY(1) scaleX(1); }
+      25% { transform: scaleY(1.1) scaleX(0.95); }
+      50% { transform: scaleY(0.95) scaleX(1.05); }
+      75% { transform: scaleY(1.08) scaleX(0.97); }
+      100% { transform: scaleY(1) scaleX(1); }
+    }
+
+    /* Effect: bolt strike */
+    .icon-zap .zap-bolt {
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+      transition: stroke-dashoffset 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .paper-card:hover .icon-zap .zap-bolt {
+      stroke-dashoffset: 0;
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .paper-type-icon,
+      .paper-type-icon * {
+        animation: none !important;
+        transition: none !important;
+      }
     }
 
     @keyframes paper-filter-in {
