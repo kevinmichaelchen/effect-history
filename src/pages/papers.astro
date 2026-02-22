@@ -111,7 +111,7 @@ const activeCategories = paperCategories.filter((cat) =>
                   href={paper.url}
                   target="_blank"
                   rel="noreferrer"
-                  class="border-theme-subtle text-theme-link rounded-full border px-2 py-0.5 text-xs no-underline"
+                  class="paper-pill"
                 >
                   Source &nearr;
                 </a>
@@ -121,7 +121,7 @@ const activeCategories = paperCategories.filter((cat) =>
                 return (
                   <a
                     href={slug ? base(`/chapters/${slug}`) : "#"}
-                    class="border-theme-subtle text-theme-link rounded-full border px-2 py-0.5 text-xs no-underline"
+                    class="paper-pill"
                   >
                     Ch. {ch}
                   </a>
@@ -338,42 +338,46 @@ const activeCategories = paperCategories.filter((cat) =>
       }
     }
 
-    /* ===== CATEGORY BADGE (subtle, in footer of card) ===== */
-    .category-badge {
-      display: inline-block;
-      padding: 0.08rem 0.45rem;
+    /* ===== CARD PILLS (uniform base for all pill types) ===== */
+    .category-badge,
+    .paper-pill,
+    .paper-pdf-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.15rem 0.5rem;
       border-radius: 9999px;
-      font-size: 0.62rem;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.7rem;
       font-weight: 500;
-      letter-spacing: 0.02em;
       white-space: nowrap;
-      background: var(--cat-bg);
+      text-decoration: none;
+      transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+    }
+
+    .category-badge {
       color: var(--cat-text);
     }
 
     :global([data-theme="dark"]) .category-badge {
-      background: var(--cat-dark-bg);
       color: var(--cat-dark-text);
     }
 
-    /* ===== PDF LINK ===== */
-    .paper-pdf-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.15rem 0.55rem 0.15rem 0.4rem;
-      border-radius: 9999px;
-      border: 1px solid var(--text-link);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+    .paper-pill {
       color: var(--text-link);
-      text-decoration: none;
-      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .paper-pill:hover {
+      border-color: var(--text-link);
+    }
+
+    .paper-pdf-link {
+      gap: 0.3rem;
+      color: var(--text-link);
     }
 
     .paper-pdf-link:hover {
       background: var(--text-link);
+      border-color: var(--text-link);
       color: var(--bg-page);
     }
   </style>
